@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Model | eFootball Wiki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #131822;
+            --card-border: rgba(0, 229, 255, 0.15);
+            --primary-neon: #00e5ff;
+            --secondary-neon: #7000ff;
+            --accent-gold: #ffb700;
+            --accent-green: #00ff88;
+            --text-main: #f0f4f8;
+            --text-muted: #8a99ad;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(112, 0, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 40%);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .top-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 10px; color: var(--primary-neon);
+            text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 10px 20px;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateX(-3px); }
+
+        .home-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+            color: var(--primary-neon); text-decoration: none; font-size: 1.1rem;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .home-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateY(-2px); }
+
+        .hero {
+            text-align: center; padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(19, 24, 34, 0.9), rgba(11, 14, 20, 0.95));
+            border: 1px solid var(--card-border); border-radius: 20px;
+            margin-bottom: 40px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 2px;
+            text-transform: uppercase; background: linear-gradient(90deg, #ffffff, var(--primary-neon));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px;
+        }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+
+        .badge {
+            display: inline-block; padding: 6px 16px; background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--primary-neon); border-radius: 50px; color: var(--primary-neon);
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px;
+        }
+
+        .section-header { display: flex; align-items: center; gap: 12px; margin: 40px 0 20px 0; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
+        .section-header i { font-size: 1.5rem; color: var(--primary-neon); }
+        .section-header h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Table Card Container */
+        .table-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .table-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-neon);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .data-table th {
+            background-color: rgba(0, 229, 255, 0.05);
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(0, 229, 255, 0.03);
+        }
+
+        .param-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--primary-neon);
+            white-space: nowrap;
+        }
+
+        .metric-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+
+        .visual-only {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="../game-mechanics.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Game Mechanics</a>
+            <a href="../index.html" class="home-btn" title="Back to Home"><i class="fa-solid fa-house"></i></a>
+        </nav>
+
+        <!-- Hero Header -->
+        <header class="hero">
+            <span class="badge"><i class="fa-solid fa-child-reaching"></i> Section 1.4</span>
+            <h1>Player Model</h1>
+            <p>Understanding how in-game player dimensions affect actual gameplay performance is essential for optimizing your squad, aerial duels, tackles, and physical collisions.</p>
+        </header>
+
+        <!-- SECTION 1: 5 CORE MODEL PARAMETERS -->
+        <div class="section-header">
+            <i class="fa-solid fa-ruler-combined"></i>
+            <h2>1. The 5 Core Model Parameters</h2>
+        </div>
+
+        <div class="table-card">
+            <h3><i class="fa-solid fa-bullseye"></i> Physical & Spatial Impact</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Parameter</th>
+                        <th style="width: 25%;">Definition</th>
+                        <th style="width: 55%;">Gameplay Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="param-name">Leg Coverage</td>
+                        <td>The diameter / reach of a player’s leg extensions.</td>
+                        <td>Crucial for Defenders and Center Forwards. Higher leg coverage dramatically improves interception reach, tackle success, and ability to reach the ball in crowded penalty boxes.</td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">Arm Coverage</td>
+                        <td>The distance a player can extend their arms.</td>
+                        <td>Vital for Goalkeepers to make acrobatic saves. For outfield players (especially defenders), arm coverage helps push away, pull back, and physically disrupt opponents.</td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">Leg Length-Based Height</td>
+                        <td>A quick baseline metric.</td>
+                        <td>Used when standard Leg Coverage calculations feel too complex.</td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">Torso Collision</td>
+                        <td>Dictates physical collisions when arms and legs are not extended.</td>
+                        <td>Directly governs shielding strength. Its gameplay impact operates at roughly a 1:1 ratio with Weight.</td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">Jump Height</td>
+                        <td>The absolute maximum height a player can reach during an aerial contest.</td>
+                        <td>
+                            <strong>Baseline Calculation:</strong> At 40 Jump stat, a player jumps 54 cm. Each additional jump point adds 0.666 cm.<br>
+                            <em>Game Mechanics Note:</em> Due to physical pressure during aerial duels, actual jump height often drops by around 0.5 cm unless the player has the <strong>Aerial Fort</strong> skill (which ensures consistent peak jump height).
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECTION 2: DETAILED BODY METRICS BREAKDOWN -->
+        <div class="section-header">
+            <i class="fa-solid fa-child"></i>
+            <h2>2. Detailed Body Metrics Breakdown</h2>
+        </div>
+
+        <div class="table-card">
+            <h3><i class="fa-solid fa-list-check"></i> Individual Body Attribute Effects</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Metric</th>
+                        <th style="width: 75%;">Gameplay Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="metric-name">Height</td>
+                        <td>The primary factor driving all 5 Core Parameters. Controls touch frequency alongside dribbling stats. Dribbling smoothness drops noticeably at 174 cm and peaks between 166 cm and 173 cm. Taller players feel clunkier regardless of high dribbling stats unless they possess the <strong>Momentum Dribbling</strong> skill.</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name">Weight</td>
+                        <td>Alters the overall volume of the player model (wider body). Has a roughly 1:1 effect on Torso Collision. <em>Note: Higher weight does NOT make a player feel heavier when dribbling.</em></td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name">Neck Length</td>
+                        <td>Alters actual physical height in-game (e.g., 14 Neck Length makes a player 2 cm taller than 7 Neck Length).</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name">Shoulder Width</td>
+                        <td>The main factor influencing Torso Collision after Height. Enhances shielding ability and slightly boosts Arm Coverage.</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name">Arm Length</td>
+                        <td>Directly increases Arm Coverage.</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name">Chest / Waist / Thigh Size</td>
+                        <td>Slightly increases Torso Collision.</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name">Leg Length</td>
+                        <td>Determines leg-to-body proportions and directly increases Leg Coverage.</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-name visual-only">Neck Size / Shoulder Height / Calf Size / Arm Size</td>
+                        <td class="visual-only">Purely visual aesthetics with no impact on gameplay.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            <p>eFootball Wiki · Player Model Section</p>
+        </footer>
+    </div>
+
+</body>
+</html>

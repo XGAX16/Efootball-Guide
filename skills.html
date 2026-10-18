@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eFootball Player Skills - Full Reference</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #131822;
+            --card-border: rgba(0, 229, 255, 0.15);
+            --primary-neon: #00e5ff;
+            --secondary-neon: #7000ff;
+            --accent-gold: #ffb700;
+            --accent-green: #00ff88;
+            --text-main: #f0f4f8;
+            --text-muted: #8a99ad;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(112, 0, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 40%);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .top-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 10px; color: var(--primary-neon);
+            text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 10px 20px;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateX(-3px); }
+
+        .home-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+            color: var(--primary-neon); text-decoration: none; font-size: 1.1rem;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .home-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateY(-2px); }
+
+        .hero {
+            text-align: center; padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(19, 24, 34, 0.9), rgba(11, 14, 20, 0.95));
+            border: 1px solid var(--card-border); border-radius: 20px;
+            margin-bottom: 40px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 2px;
+            text-transform: uppercase; background: linear-gradient(90deg, #ffffff, var(--primary-neon));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px;
+        }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+
+        .hero-badge {
+            display: inline-block; padding: 6px 16px; background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--primary-neon); border-radius: 50px; color: var(--primary-neon);
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px;
+        }
+
+        .stats-bar {
+            display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 22px;
+        }
+        .stats-bar span {
+            padding: 6px 16px; background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border);
+            border-radius: 50px; color: var(--text-muted); font-size: 0.85rem; font-weight: 600;
+        }
+
+        .section-header { display: flex; align-items: center; gap: 12px; margin: 40px 0 20px 0; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
+        .section-header i { font-size: 1.5rem; color: var(--primary-neon); }
+        .section-header h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Reading guide (same look as the table cards) */
+        .guide-notes {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        .guide-notes h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-neon);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .guide-notes ul { padding-left: 22px; color: var(--text-muted); }
+        .guide-notes li { margin-bottom: 10px; line-height: 1.6; }
+        .guide-notes li strong { color: #ffffff; }
+        .reliability-warning {
+            margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-style: italic; line-height: 1.6; color: var(--accent-gold);
+        }
+
+        /* Skill cards */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        .skill-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-neon);
+            background-color: #151b27;
+            box-shadow: 0 8px 24px rgba(0, 229, 255, 0.08);
+        }
+
+        .skill-header {
+            display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px;
+        }
+        .skill-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+            color: var(--primary-neon);
+        }
+
+        .badge {
+            flex-shrink: 0; white-space: nowrap;
+            font-size: 0.7rem; padding: 4px 12px; border-radius: 50px;
+            font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            border: 1px solid transparent;
+        }
+        .badge.standard   { background: rgba(138, 153, 173, 0.1); border-color: rgba(138, 153, 173, 0.4); color: var(--text-muted); }
+        .badge.show-time  { background: rgba(112, 0, 255, 0.15);  border-color: var(--secondary-neon);    color: #b58cff; }
+        .badge.unreleased { background: rgba(255, 183, 0, 0.1);   border-color: var(--accent-gold);       color: var(--accent-gold); }
+
+        .skill-section { margin-top: 12px; font-size: 0.92rem; line-height: 1.6; }
+
+        .skill-section .label {
+            display: block; margin-bottom: 4px;
+            font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase; color: #ffffff;
+        }
+
+        .skill-section.ingame-desc {
+            color: var(--text-muted); font-style: italic;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 12px; margin-bottom: 12px; margin-top: 0;
+        }
+        .skill-section.real-effect { color: var(--text-main); }
+        .skill-section.activation {
+            color: var(--text-muted); font-size: 0.85rem;
+            background: rgba(0, 229, 255, 0.05);
+            border-left: 3px solid var(--primary-neon);
+            padding: 10px 12px; border-radius: 8px; margin-top: 16px;
+        }
+        .skill-section.activation .label { color: var(--primary-neon); }
+
+        /* Skill search filter */
+        .search-bar {
+            position: sticky; top: 10px; z-index: 50;
+            display: flex; align-items: center; gap: 10px;
+            max-width: 560px; margin: 0 auto 30px auto; padding: 8px 16px;
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+            transition: border-color 0.3s ease;
+        }
+        .search-bar:focus-within { border-color: var(--primary-neon); }
+        .search-bar > i { color: var(--primary-neon); }
+        .search-bar input {
+            flex: 1; min-width: 0; background: transparent; border: none; outline: none;
+            color: var(--text-main); font-size: 16px; padding: 6px 0;
+            -webkit-appearance: none; appearance: none;
+        }
+        .search-bar input::placeholder { color: var(--text-muted); }
+        .search-bar input::-webkit-search-cancel-button { -webkit-appearance: none; }
+        .search-clear { display: none; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1rem; padding: 4px 6px; }
+        .search-clear:hover { color: var(--primary-neon); }
+        .search-count { font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; }
+        .no-results { display: none; text-align: center; color: var(--text-muted); padding: 40px 20px; font-size: 1.05rem; }
+
+        footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+
+        @media (max-width: 768px) {
+            .skills-grid { grid-template-columns: 1fr; }
+            .hero { padding: 35px 15px; }
+            .hero h1 { font-size: 1.9rem; }
+            .section-header h2 { font-size: 1.2rem; }
+            .back-btn { padding: 10px 14px; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="../game-mechanics.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Game Mechanics</a>
+        <a href="../index.html" class="home-btn" title="Back to Home"><i class="fa-solid fa-house"></i></a>
+    </nav>
+
+    <header class="hero">
+        <span class="hero-badge"><i class="fa-solid fa-bolt"></i> Skills Reference</span>
+        <h1>eFootball Player Skills</h1>
+        <p>Full Reference Guide</p>
+        <div class="stats-bar">
+            <span>Standard: 44</span>
+            <span>Show Time: 22</span>
+            <span>Show Time Prototypes: 7</span>
+            <span>Unreleased: 5</span>
+        </div>
+        <div class="stats-bar" style="margin-top: 8px;">
+            <span>Dribbling: 18</span>
+            <span>Passing: 17</span>
+            <span>Shooting: 16</span>
+            <span>Defending: 12</span>
+            <span>Goalkeeping: 8</span>
+            <span>Mentality: 7</span>
+        </div>
+    </header>
+
+    <!-- Skill search -->
+    <div class="search-bar" role="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="skillSearch" placeholder="Search skill by name (e.g. Mom...)" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Search skill by name">
+        <button type="button" class="search-clear" id="searchClear" aria-label="Clear search"><i class="fa-solid fa-xmark"></i></button>
+        <span class="search-count" id="searchCount"></span>
+    </div>
+    <div class="no-results" id="noResults">No skill found with this name.</div>
+
+    <div class="guide-notes">
+        <h3><i class="fa-solid fa-book-open"></i> Guide to reading the entries</h3>
+        <ul>
+            <li><strong>In-game description:</strong> The official text shown within the game.</li>
+            <li><strong>Real effect:</strong> The quantified effect and the technical explanation derived from the game engine.</li>
+            <li><strong>Activation condition:</strong> The exact conditions under which the ability activates on the field.</li>
+            <li><strong>Layers:</strong> 
+                Layer 1 = in-match attribute boost, capped at a maximum of 99. 
+                Layer 2 = actual local ability, with no limits (can exceed 99). 
+                Layer 3 = kinematic/physical parameters (the 99 threshold does not apply).
+            </li>
+            <li><strong>Areas of the field:</strong> The 18-meter lines are measured from the halfway line across the entire width (not from the penalty area lines); the zones are mirrored when the teams switch ends.</li>
+        </ul>
+        <p class="reliability-warning"><strong>Reliability note:</strong> The numbers come directly from the guide (obtained via reverse engineering of the game engine). Data regarding animation-related ability stats (e.g., a 0.20s latency) and "unreleased" abilities are not confirmed.</p>
+    </div>
+
+    <!-- SHOOTING SKILLS -->
+    <div class="section-header category-title">
+        <i class="fa-solid fa-bullseye"></i>
+        <h2>Shooting Skills - 16</h2>
+    </div>
+    <div class="skills-grid">
+        <!-- Heading -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Heading</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Improves the accuracy of headers as well as the frequency of downward headers.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+5 Header Accuracy / Downward Trajectory. Injects +5 to Heading accuracy and forces ballistic trajectories downward toward the turf, reducing goalkeeper save windows.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Standard header attempts</div>
+        </div>
+        <!-- Long-range Curler -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Long-range Curler</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a sharp, accurate Controlled Shot with a heavy curl that often hits the target even from a long distance.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+5 Curl & Finishing on Long Curled Shots. Injects +5 to Curl and Finishing on finesse attempts from outside the box, tightening the swerve toward the far post.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Curled or finesse shot from outside the penalty box</div>
+        </div>
+        <!-- Chip Shot Control -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Chip Shot Control</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs an accurate Chip Shot, even when moving at high speed.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+12% Chip Shot Arc Accuracy. Optimizes initial ball lift trajectory and shortens chip shot wind-up latency, improving lob accuracy over the keeper by +12%.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Chip shot attempt (L1 + Shot)</div>
+        </div>
+        <!-- Knuckle Shot -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Knuckle Shot</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a Knuckle Shot when entering a Stunning Shot command while the Power Gauge is 50-65％ full. A good free kick option.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Sinusoidal Z Turbulence / Knuckleball Dip. Suppresses gyroscopic spin and injects random sinusoidal oscillations along Y/Z axes, producing erratic knuckleball movement that confounds keepers.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Power strike with full instep and power > 65%</div>
+        </div>
+        <!-- Dipping Shot -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Dipping Shot</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a Dipping Shot when entering a Stunning Shot command while the Power Gauge is 20-50％ full.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Accelerated Ballistic Drop at Goal Line. Forces artificial downward gravitational Acceleration in late flight stages, making the shot dip sharply right under the crossbar.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Stunning or power shot from medium range with 20-50% gauge</div>
+        </div>
+        <!-- Rising Shot -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Rising Shot</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a Rising Shot when entering a Stunning Shot command while the Power Gauge is 65-95％ full.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Linear Rising Trajectory without Drop. Negates gravitational decay by locking a progressive rising vector, driving the shot linearly into the upper corners at high Speed.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Power shot from medium range with 65-95% power gauge</div>
+        </div>
+        <!-- Long-range Shooting -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Long-range Shooting</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a Long-range Shot from outside the box that often hits the target.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+4 Finishing & Shot Power (> 20m). Injects +4 to Finishing and Kicking Power on attempts taken from beyond 20 meters, keeping long-range strikes on target.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Shots taken from distance > 20 meters</div>
+        </div>
+        <!-- Acrobatic Finishing -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Acrobatic Finishing</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to find a finish even from awkward positions or when off balance.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Bicycle Kicks & Awkward Volleys / +5 Accuracy. Enables acrobatic Finishing montage clips (bicycle kicks, side volleys, flying headers) with +5 local accuracy on difficult high deliveries.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Aerial or awkward ball trajectory inside box</div>
+        </div>
+        <!-- First-time Shot -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">First-time Shot</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Improves technique and precision when taking first-time shots.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+5 Finishing / No Plant Foot Delay. Suppresses plant-foot positioning latency and injects +5 to Finishing, delivering accurate and powerful first-time shots without trapping.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>First-time shot attempt without prior ball trap</div>
+        </div>
+        <!-- Penalty Specialist -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Penalty Specialist</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to take higher accuracy penalty kicks.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+7 Finishing / Penalty Precision Cone. Injects +7 to Finishing and tightens aim dispersion during penalty kicks, ensuring pinpoint placement inside the posts.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Penalty kick attempt</div>
+        </div>
+        <!-- Phenomenal Finishing -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Phenomenal Finishing</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Increases the power and accuracy of finishing shots attempted from unorthodox body positions.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Local Finishing +7 (Uncapped) / Backward & Acrobatic Error Reduction. Grants local Finishing +7 for off-Balance and difficult posture shots, exceeding the 99 cap (99 -> 106). Reduces backward shot error (0.3 -> 0.8) and avoids angular ability discounts.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Non-Heading shot in special postures / difficult angles (categories 5/6/7, direction class <5 or >12, motion tier 2-11)</div>
+        </div>
+        <!-- Blitz Curler -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Blitz Curler</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a Controlled Shot with heavy topspin while the Power Gauge is at least 50％ full.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Dynamic Top-Spin Trajectory (Power >= 50%, Dist <= 35m). Demands Controlled Shot at >= 50% power and <= 35m. Remaps power and adds an adaptive vertical launch angle (+3.87° to +6.77°) to produce a sharply dipping Magnus top-spin curve.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Controlled Shot (R2) with input power >= 50% and distance <= 35m</div>
+        </div>
+        <!-- Bullet Header -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Bullet Header</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to head the ball sharply towards goal, shooting with power and accuracy even from awkward positions or when off balance.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+4 km/h Max Speed Bound / Contact Error x0.5. Does not add flat Heading attribute points. Raises maximum ball Speed bound by +4 km/h, halves contact error severity (x0.5), and improves directional mismatch retention. Coexists with standard Heading (+5).</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Headed shot attempt on goal</div>
+        </div>
+        <!-- Low Screamer -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Low Screamer</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Performing a Stunning Shot while the Power Gauge is under 50％ full will increase the speed of the shot. A Dipping Shot will not occur.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+0.2 Local Power Parameter (Stunning Shot < 50%). Activates exclusively on Stunning Shots below 50% power. Adds +0.2 directly to the local power input parameter (0.4 -> 0.6) and forces low trajectory by suppressing Dipping Shot.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Stunning Shot with power gauge strictly below 50%</div>
+        </div>
+        <!-- Snap Strike -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Snap Strike</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Takes less time to kick the ball when making a Stunning Shot.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>-35% Wind-up Time / +6 Shot Power. Reduces stunning shot wind-up animation time by 35% and injects +6 to Kicking Power, releasing the shot abruptly before defenders can block.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Stunning shot on the run or from medium range (> 20m)</div>
+        </div>
+    </div>
+
+    <!-- PASSING SKILLS -->
+    <div class="section-header category-title">
+        <i class="fa-solid fa-share-nodes"></i>
+        <h2>Passing Skills - 17</h2>
+    </div>
+    <div class="skills-grid">
+        <!-- Heel Trick -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Heel Trick</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to pass and shoot using the heel, even from awkward positions or when off balance.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Heel Delivery without Body Turn / +4 Acc. Unlocks backheel montage clips allowing immediate delivery without reorienting body torso, with +4 local accuracy.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Pass or shot attempt when ball is positioned behind body</div>
+        </div>
+        <!-- One-touch Pass -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">One-touch Pass</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Improves technique and precision when executing one-touch passes.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+5 Pass Stats / -0.2s Execution Latency. Removes plant-foot preparation frames on first-time passes and injects +5 to delivery accuracy, accelerating ball circulation.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>One-touch pass attempt without prior Ball Control</div>
+        </div>
+        <!-- Through Passing -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Through Passing</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to make through passes with the appropriate trajectory. Also improves the overall accuracy of through passes.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>-35% Angular Dispersion on Through Balls. Modifies the engine's through-ball ballistic error cone, ensuring tight trajectories matching the runner's sprint line without losing roll Speed.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Through ball executed (Y / Triangle)</div>
+        </div>
+        <!-- Weighted Pass -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Weighted Pass</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs an accurate Lofted Pass or Chipped Through Ball with heavy backspin to a forward area.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Back-spin Rotation / Grip on Bounce. Injects inverse gyroscopic back-spin into the Lofted Pass trajectory, dampening bounce velocity to prevent the ball from running away from the receiver.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Lofted Pass or chipped through-ball</div>
+        </div>
+        <!-- Pinpoint Crossing -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Pinpoint Crossing</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a sharp, accurate cross with a heavy curl.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+5 Curl & Lofted Pass on Crosses. Injects +5 to Curl and Lofted Pass when crossing from wide channels, curling the delivery around defenders directly onto attackers.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Crosses from wide areas or corner positions</div>
+        </div>
+        <!-- Outside Curler -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Outside Curler</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a precise spinning shot or pass with the outside of the boot, even from range, using the stronger foot for accuracy.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Convex Outside-Foot Curl. Modifies Curl physics to allow outside-of-the-boot shooting and passing on the dominant foot, generating outward convex swerve with high accuracy.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Shot or pass using dominant foot oriented toward outside angle</div>
+        </div>
+        <!-- Rabona -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Rabona</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a Rabona to disrupt the defence's timing with a surprise kick, using the stronger foot for accuracy.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Crossed Rabona / Weak-Foot Compensation. Enables rabona montage execution on crosses and shots, substituting weak-foot delivery with the dominant foot crossed behind.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Pass or shot crossing dominant leg behind standing leg</div>
+        </div>
+        <!-- No Look Pass -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">No Look Pass</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to play unexpected passes and confuse the opponent with his lines of sight.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Defense AI Delay -0.25s / No-Look Animation. Executes a no-look pass montage that injects a 0.25s reaction hesitation into opposing defensive AI intercept calculations.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Pass delivered at 45°-90° angle while head faces straight forward</div>
+        </div>
+        <!-- Low Lofted Pass -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Low Lofted Pass</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to hit long and accurate Lofted Passes with a low trajectory.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Low Arc / Height < 2.2m. Caps Lofted Pass ceiling at 2.2 meters with a fast trajectory, clearing midfield lines while landing directly into the forward's stride.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Low Lofted Pass (L1 + soft Triangle)</div>
+        </div>
+        <!-- Long Throw -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Long Throw</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Improves the range of long throws.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Range 35m / Flat Trajectory. Modifies throw-in ballistics extending range to 35 meters with higher launch velocity, enabling direct crossing into the box.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Throw-in in attacking half</div>
+        </div>
+        <!-- Game-changing Pass -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Game-changing Pass</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Improves player's passing abilities after the second half kick-off, under the circumstances that the team is either drawing or losing.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+6 Low Pass & Lofted Pass (Tied or Trailing in 2nd Half, Cap 99). Adds +6 to Low Pass and Lofted Pass when tied or trailing from minute 46 onwards. Enters Layer 1 capped at 99.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Tied or losing score in 2nd Half or Extra Time (min >= 46)</div>
+        </div>
+        <!-- Visionary Pass -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Visionary Pass</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Increases the accuracy of one-touch passes, first-time shots and traps performed by players who receive passes from the holder of this Player Skill.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Local +6 to Receiver Action Stat (Uncapped, cleared on trap/Dribbling). Tags ball actor in memory. Receiver gets local +6 to the active stat of their first action (e.g. Finishing on 1-touch shot, Low Pass on 1-touch pass). Uncapped at 99 (99 -> 105). Crucial: marker is destroyed immediately upon an ordinary trap or Dribbling!</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Successful footed short pass, through ball or Lofted Pass released by holder</div>
+        </div>
+        <!-- Edged Crossing -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Edged Crossing</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to put in vertically rotating crosses that fall sharply.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Dedicated Dipping Cross Trajectory (< 30 km/h, Dist 12-32m). Selects motion 80 with specialized top-spin components and elevated launch angle (+2.5° to +3.8°) to produce a dipping cross over the defensive line. Requires ball Speed under 30 km/h before delivery.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Crossing action with ball Speed < 30 km/h before kick and planned distance 12 to 32m</div>
+        </div>
+        <!-- Phenomenal Pass -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Phenomenal Pass</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Increases the power and accuracy of passes attempted from unorthodox body positions.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Local Low/Lofted Pass +6 (Uncapped) / Angular Error Reduction. Adds local +6 to Low Pass or Lofted Pass on awkward posture deliveries without capping at 99 (99 -> 105). Eliminates backward Speed error (0.3 -> 0.8) and prevents angular power discounts.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Non-Heading pass in difficult postures or awkward angles</div>
+        </div>
+        <!-- Decisive Pass -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Decisive Pass</h3>
+                    <span class="badge unreleased">Unreleased</span>
+                </div>
+                <div class="skill-section ingame-desc">Helps make important passes more effective, especially Stunning Passes.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Enhances trajectory, speed and defense-splitting precision on purple-bar Stunning Passes. Stunning pass booster enhancing trajectory velocity and precision on through balls in final third.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Pass executed in final third (X >= +18.0m) or purple-bar Stunning Pass attempt</div>
+        </div>
+    </div>
+
+    <!-- DRIBBLING SKILLS -->
+    <div class="section-header category-title">
+        <i class="fa-solid fa-person-running"></i>
+        <h2>Dribbling Skills - 18</h2>
+    </div>
+    <div class="skills-grid">
+        <!-- Scissors Feint -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Scissors Feint</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a faster type of Scissors Feint than normal when entering a Scissors Feint command.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Stepover Feint / 0.20s Mocap Latency. Accelerates leg turnover on stepover feints reducing cycle time to 0.20s, enabling rapid multi-directional breakouts.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Scissors Feint command execution</div>
+        </div>
+        <!-- Double Touch -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Double Touch</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a faster type of Double Touch than normal when entering a Double Touch command.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Fast Croqueta / 0.32s Window. Unlocks the rapid foot-to-foot croqueta in 0.32 seconds without linear momentum loss, gliding past lunging defenders.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Double Touch command execution</div>
+        </div>
+        <!-- Flip Flap -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Flip Flap</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a Flip Flap feint when entering a Flip Flap command.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Classic Flip Flap / 0.28s Recovery. Enables the classic two-touch flip flap mocap montage, shortening breakout transition latency to 0.28s.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Flip Flap command execution</div>
+        </div>
+        <!-- Marseille Turn -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Marseille Turn</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a faster type of Marseille Turn than normal when entering a Marseille Turn command.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Marseille Turn / Body Shielding. Unlocks the 360° Marseille roulette montage, shielding the ball with the player's frame to prevent side tackles.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Marseille Turn command execution</div>
+        </div>
+        <!-- Sombrero -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Sombrero</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Increases the accuracy of Sombrero and Rainbow Flick. Also allows the player to perform a Sombrero when receiving a Low Pass.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Aerial Sombrero / Overhead Self-Pass. Enables overhead sombrero self-passes over advancing defenders on aerial receptions, keeping the ball airborne.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Sombrero/Rainbow Flick command or Low Pass reception</div>
+        </div>
+        <!-- Chop Turn -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Chop Turn</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a faster type of Chop Turn than normal when entering a Chop Turn command.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Acute Angle Cut / Instant Burst. Enables sharp acute chop cuts toward the dominant foot, eliminating previous linear momentum for explosive exits.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Chop Turn command execution</div>
+        </div>
+        <!-- Cut Behind & Turn -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Cut Behind & Turn</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a Cut Behind. When turning at a wide angle, also uses a special trapping motion.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Improvised Heel Chops / Unorthodox Foot Switches. Enables improvised heel flicks and plant-foot chops under tight pressure, slipping past double teams in tight spaces.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Tight Dribbling in crowded spaces with defender glued tight</div>
+        </div>
+        <!-- Scotch Move -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Scotch Move</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a Scotch Move feint when entering a Scotch Move command.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Standing Foot Pivot / Zero Decay Turn. Unlocks standing-foot pivot montages to hold off center-backs and execute 180° turns while shielding ball possession.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Scotch Move command execution</div>
+        </div>
+        <!-- Sole Control -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Sole Control</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to control the ball more using the soles of his feet when executing feints and turns.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>360° Sole Trapping / Stumble Suppression. Enables 360° sole-trapping mocap montages, dampening bounce on high-Speed passes for immediate orientation.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Feints, turns, or ball receptions</div>
+        </div>
+        <!-- Momentum Dribbling -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Momentum Dribbling</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Improves player's dribbling abilities in the attacking third (deep in opposition territory).</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+6 Dribbling, Tight Possession, Speed, Accel (X >= +18m, Cap 99). Grants +6 to Dribbling, Tight Possession, Speed and Acceleration when carrying ball past X >= +18m. Capped at 99 in Layer 1. Does not stack with Attacking Surge.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Longitudinal coordinate X >= +18.0m (18m past midfield into attacking half) while possessing ball</div>
+        </div>
+        <!-- Acceleration Burst -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Acceleration Burst</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to perform a quick Sharp Touch while stationary or moving slowly. Special Sharp Touch motions may also be triggered.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+2.5% Speed Multiplier / +0.1 Tight Possession Timing. Unlocks quick hook-touch animations for direction changes between 15.5° and 120°, applying a 1.025x Speed parameter multiplier and +0.1 to Tight Possession contact timing.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Quick hook-touch direction change between 15.5° and 120°</div>
+        </div>
+        <!-- Edge Turn -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Edge Turn</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables sharp turns at high speed with minimum deceleration.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+0.1 Tight Turn Friction / 1.025f Multiplier. Adjusts turn friction coefficient by +0.1 and locks kinetic multiplier at 1.025f, executing tight cuts without shedding sprinting Speed.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Sharp turn while Dribbling with velocity < 20.0 m/s</div>
+        </div>
+        <!-- Magnetic Feet -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Magnetic Feet</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">When in possession of the ball, increases the player's ability to keep it based on the number of opponents within 5 metres (4 opponents max).</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+2 to +8 to Dribbling, Tight Possession, Phys Contact, Balance (Cap 99). Injects +2 to Dribbling, Tight Possession, Physical Contact, and Balance for each opponent within 5m, up to a maximum of +8 for 4 opponents. Capped at 99.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Ballholder in possession with nearby opponents within 5 meters (0 < d < 5.0m, up to 4 opponents)</div>
+        </div>
+        <!-- Tap Trick -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Tap Trick</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a Tap Trick feint when entering a feint command.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Heel Tap Stop / Zero Inertia Latency. Unlocks heel-tap fake stops to halt ball dead on the pitch, nullifying sprint momentum to unbalance tracking defenders.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Feint command execution</div>
+        </div>
+        <!-- Beast Drive -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Beast Drive</h3>
+                    <span class="badge unreleased">Unreleased</span>
+                </div>
+                <div class="skill-section ingame-desc">Uses physical strength to push forward powerfully.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Physical Shield 0.45s / Stumble Immunity. Grants 0.45 seconds of full immunity to collision deceleration in sprint duels, absorbing heavy shoulder charges without stumbling.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Sprint duel engaging shoulder-to-shoulder with defender</div>
+        </div>
+        <!-- Sharp Cut -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Sharp Cut</h3>
+                    <span class="badge unreleased">Unreleased</span>
+                </div>
+                <div class="skill-section ingame-desc">Helps players quickly turn at around a 90 deg angle to get past defenders.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>90° Angle Cut / Zero Momentum Loss. Eliminates pre-braking animation frames on 90° cuts, allowing attackers to pivot sharply while maintaining peak sprint velocity.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>90 degree turn command while dribbling</div>
+        </div>
+    </div>
+
+    <!-- DEFENDING SKILLS -->
+    <div class="section-header category-title">
+        <i class="fa-solid fa-shield-halved"></i>
+        <h2>Defending Skills - 12</h2>
+    </div>
+    <div class="skills-grid">
+        <!-- Man Marking -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Man Marking</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Reacts quickly to an opponent's movements and applies tight marking that is hard to shake.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>-30% Tracking Distance / Anti-Run Cut. Modifies defensive AI steering vectors reducing marking separation by 30%, preventing attackers from receiving unmarked or cutting behind.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Defensive phase without team possession</div>
+        </div>
+        <!-- Track Back -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Track Back</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to aggressively apply pressure to the opposition ballholder all the way from the frontlines.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+15% Tracking Back Acceleration. Overrides forward tactical AI on ball loss, initiating immediate recovery runs with +15% tracking Acceleration to pressure opponents from behind.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Turnover of possession in midfield or defensive half</div>
+        </div>
+        <!-- Interception -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Interception</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Reacts quickly to passes and intercepts them at a higher rate.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+0.6m Intercept Reach / Mocap Nodes. Enables 360° leg-extension animation nodes in the blend tree, extending effective intercept reach by +0.6m without compromising defensive momentum.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Opponent pass trajectory entering defender cut radius</div>
+        </div>
+        <!-- Blocker -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Blocker</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Reacts quickly to kicks by blocking passes and shots at a high rate, and also limits the amount of rebound.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+0.8m Block Coverage / Body Deflections. Triggers full-body blocking and sliding screen animation montages when a shot is aimed on target, expanding defensive coverage by +0.8 meters.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Opponent shot or cross on trajectory toward goal</div>
+        </div>
+        <!-- Aerial Superiority -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Aerial Superiority</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Gains an advantage during mid-air battles and maintains heading accuracy more easily.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+4 Jumping & Aerial Physical Contact. Injects +4 temporary points to Jumping and Physical Contact during aerial collision frames, winning positional authority against opponents.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Aerial contests on goal kicks and clearances</div>
+        </div>
+        <!-- Sliding Tackle -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Sliding Tackle</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Performs a Sliding Tackle with greater accuracy and speed, and wins the ball more easily.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+0.8m Slide Reach / -15% Card Risk. Increases slide reach by +0.8m while applying a 15% mitigating factor in referee foul evaluations upon touching the ball.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Sliding Tackling execution (Circle / B)</div>
+        </div>
+        <!-- Acrobatic Clearance -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Acrobatic Clearance</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to clear the ball using his feet, even from awkward positions.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Bicycle/Scissor Clear / Zero Stumble. Unlocks acrobatic clearance montage clips (scissor kicks and overhead kicks) when clearing off the goal line under pressure.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Clearance attempt under physical pressure inside box</div>
+        </div>
+        <!-- Fortress -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Fortress</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Improves player's defensive abilities after the second half mark, as long as the team has a goal advantage.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+6 to 4 Defensive Stats (Cap 99). Injects +6 to Defensive Awareness, Tackling, Aggression and Defensive Engagement while leading from minute 46. Enters Layer 1 capped at 99.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Leading scoreline during 2nd Half (min >= 46) or Extra Time</div>
+        </div>
+        <!-- Shadow Hunt -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Shadow Hunt</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Increases speed-related abilities when this player is a DMF, RB, LB or CB and an opponent's pass is played behind them.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+3 Speed & Acceleration (Loose ball chase behind player, Cap 99). Injects +3 Speed and Acceleration when tracking back to chase a loose ball played behind the defensive line. Turns off as soon as any player secures possession.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Defender (CB, LB, RB, DMF) chasing an opponent's loose pass/through ball played behind him towards own goal line</div>
+        </div>
+        <!-- Power Tackle -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Power Tackle</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Makes it easier to perform a Standing Tackle that wins the ball using body contact, while also making it easier to knock the opponent off balance.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+5.625° Orientation Angle / +3.0 Lateral Correction Rate. Expands standing reach-Tackling candidates, adding +5.625° to one-sided angular coverage on 7 animations and +3.0 to the lateral correction rate limit towards the ball.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Standing reach-Tackling candidate selection (Power Tackling)</div>
+        </div>
+        <!-- Aerial Fort -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Aerial Fort</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Improves player's abilities regarding aerial duels when positioned inside his own penalty box.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+4 to Physical Contact and Jumping during aerial duels inside own area. Defensive Show Time skill granting superiority in aerial duels inside own penalty area against rival attackers.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Aerial duel during PASS_GET inside own penalty area where ball trajectory height exceeds player height</div>
+        </div>
+    </div>
+
+    <!-- GOALKEEPING SKILLS -->
+    <div class="section-header category-title">
+        <i class="fa-solid fa-hand"></i>
+        <h2>Goalkeeping Skills - 8</h2>
+    </div>
+    <div class="skills-grid">
+        <!-- GK Low Punt -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">GK Low Punt</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to take accurate punt kicks with a low trajectory.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Flat Punt / Height < 3m. Restricts goalkeeper punt trajectory below 3.0 meters with high velocity, reaching attackers before defenders can intercept.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Goalkeeper drop kick or punt delivery</div>
+        </div>
+        <!-- GK High Punt -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">GK High Punt</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables goalkeepers to take long, high punt kicks that end up deep in opposition territory.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>High Arc / Height > 12m. Adjusts long punt flight path elevating the ball above 12 meters, allowing physical target men time to contest aerial duels.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>High trajectory goalkeeper punt delivery</div>
+        </div>
+        <!-- GK Long Throw -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">GK Long Throw</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Improves the range on throws by the goalkeeper.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Range 45m / Fast Breakout. Increases exit velocity and reach of goalkeeper hand throws up to 45 meters with a flat arc, initiating instant counter-attacks to wide players.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Goalkeeper overhand throw after securing the ball</div>
+        </div>
+        <!-- GK Penalty Saver -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">GK Penalty Saver</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Enables the player to have better goalkeeping reactions against penalty kicks.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+6 GK Reflexes / +10% Diving Speed. Injects +6 to GK Reflexes and Reach on penalty kicks while boosting lateral diving Speed by +10% toward the bottom corners.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Defending penalty kicks</div>
+        </div>
+        <!-- GK Directing Defence -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">GK Directing Defence</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Goalkeeper Skill that improves the defensive abilities of your DF players positioned deep in your own territory.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+2 Defensive Awareness & +2 Aggression (X <= -18m, Cap 99). Grants +2 Defensive Awareness and +2 Aggression (NOT Tackling) to CBs and fullbacks situated deeper than 18m behind midfield in own half. Capped at 99.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>On-field GK has skill; recipient teammates are CB, LB, RB positioned in deep defensive zone (X <= -18.0m)</div>
+        </div>
+        <!-- GK Spirit Roar -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">GK Spirit Roar</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Goalkeeper Skill that improves the physical abilities of your DF players when leading after half-time.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+2 Physical Contact, Jumping & Accel (2nd Half Lead, Cap 99). Gives +2 Physical Contact, Jumping, and Acceleration to CB, LB, and RB teammates while leading in the 2nd half. Combines with GK Directing Defence to boost 5 distinct attributes.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>On-field GK has skill; team leading in 2nd Half or Extra Time; recipient teammates are CB, LB, RB</div>
+        </div>
+        <!-- GK Aerial Claim -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">GK Aerial Claim</h3>
+                    <span class="badge unreleased">Unreleased</span>
+                </div>
+                <div class="skill-section ingame-desc">Helps goalkeepers claim crosses, corners, and high passes more effectively.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+4 to Physical Contact and Jumping during aerial duels in own area when ball trajectory is above player height. Unreleased goalkeeping skill focused on dominant aerial control and claiming high crosses.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Aerial contest in own area when ball trajectory is above player height</div>
+        </div>
+        <!-- GK Rush Out -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">GK Rush Out</h3>
+                    <span class="badge unreleased">Unreleased</span>
+                </div>
+                <div class="skill-section ingame-desc">Allows the goalkeeper to quickly rush toward an attacking player.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>Massive burst acceleration and reaction speed when rushing out to close 1v1 angles. Sweeper rush speed granting rapid acceleration towards 1v1 breakaways.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Manual rush (Triangle/Y) or automated trigger in 1v1 situation outside 6-yard box</div>
+        </div>
+    </div>
+
+    <!-- MENTALITY SKILLS -->
+    <div class="section-header category-title">
+        <i class="fa-solid fa-brain"></i>
+        <h2>Mentality Skills - 7</h2>
+    </div>
+    <div class="skills-grid">
+        <!-- Gamesmanship -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Gamesmanship</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Wins fouls more easily when in possession of the ball.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+35% Foul Call Probability. Adjusts the referee engine decision threshold by 1.35x when calculating fouls during physical duels, increasing card probabilities for opponents.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Shoulder charge or physical duel while Dribbling against defender</div>
+        </div>
+        <!-- Captaincy -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Captaincy</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Become the team's inspiration on the pitch, reducing the effects of fatigue for the entire team.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>-6% Global Team Stamina Drain. Applies a passive 6% reduction to Stamina consumption across all teammates on the pitch, mitigating collective fatigue in late-game stages.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Assigned as team captain during the match</div>
+        </div>
+        <!-- Super-sub -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Super-sub</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Improves player's abilities when introduced after the second half mark.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+1 to 25 Core Attributes (Flags 1-4, Cap 99). Injects flat +1 to 25 core player attributes upon substitution from 2nd half onwards (excludes Stamina and Weak Foot). Subject to Layer 1 cap of 99.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Substituted onto pitch in 2nd Half, Extra Time or Shootout (Period Flags 1-4)</div>
+        </div>
+        <!-- Fighting Spirit -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Fighting Spirit</h3>
+                    <span class="badge standard">Standard</span>
+                </div>
+                <div class="skill-section ingame-desc">Rarely loses kicking or heading accuracy when pressured by an opponent, and is less affected by fatigue.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>-20% Error under Pressure / +15% Fatigue Threshold. Does NOT provide infinite Stamina. Multiplies pressure error penalty by 0.8 (20% reduction) even at 100% Stamina, and delays autonomous running fatigue tier downgrade from 60% to 75% consumed Stamina (85% with Captaincy).</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Pass or shot under opponent pressure / Autonomous AI running planning</div>
+        </div>
+        <!-- Attack Trigger -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Attack Trigger</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Increases all other teammates' Attacking Awareness when this player has control of the ball.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+3 Attacking Awareness to All Teammates (Cap 99). While the skill holder has possession, all other teammates receive +3 Attacking Awareness to accelerate forward runs and attacking support. Capped at 99.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Live play (IN_PLAY), current ballholder possesses the skill (Attack Trigger)</div>
+        </div>
+        <!-- Attacking Surge -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Attacking Surge</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Increases speed-related abilities when this player is in the attacking half and a teammate has the ball.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+3 Off-the-ball Speed & Acceleration (Opponent's Half, Cap 99). Grants +3 off-the-ball Speed and Acceleration when sprinting into the opponent's half while a teammate has the ball. Disables the moment the player touches the ball; never stacks with Momentum Dribbling.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Player without ball strictly inside opponent's half while a teammate has possession (Attacking Surge)</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>eFootball Wiki · Skills Section</p>
+    </footer>
+</div>
+
+<script>
+(function () {
+    var input = document.getElementById('skillSearch');
+    var clearBtn = document.getElementById('searchClear');
+    var countEl = document.getElementById('searchCount');
+    var noResults = document.getElementById('noResults');
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.skill-card'));
+    var groups = Array.prototype.slice.call(document.querySelectorAll('.category-title')).map(function (title) {
+        var grid = title.nextElementSibling;
+        while (grid && !grid.classList.contains('skills-grid')) grid = grid.nextElementSibling;
+        return { title: title, grid: grid };
+    });
+
+    // Lowercase, strip accents, drop everything that is not a letter or digit
+    function norm(str) {
+        return str.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]/g, '');
+    }
+
+    var names = cards.map(function (card) {
+        return norm(card.querySelector('.skill-name').textContent);
+    });
+
+    function applyFilter() {
+        var q = norm(input.value);
+        var visible = 0;
+
+        cards.forEach(function (card, i) {
+            var match = q === '' || names[i].indexOf(q) === 0;
+            card.style.display = match ? '' : 'none';
+            if (match) visible++;
+        });
+
+        groups.forEach(function (g) {
+            var any = g.grid && g.grid.querySelector('.skill-card:not([style*="display: none"])');
+            var show = q === '' || !!any;
+            g.title.style.display = show ? '' : 'none';
+            if (g.grid) g.grid.style.display = show ? '' : 'none';
+        });
+
+        clearBtn.style.display = input.value ? 'block' : 'none';
+        countEl.textContent = q === '' ? '' : visible + ' / ' + cards.length;
+        noResults.style.display = (q !== '' && visible === 0) ? 'block' : 'none';
+    }
+
+    input.addEventListener('input', applyFilter);
+    input.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { input.value = ''; applyFilter(); }
+    });
+    clearBtn.addEventListener('click', function () {
+        input.value = '';
+        applyFilter();
+        input.focus();
+    });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eFootball Playstyles - Full Reference</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #131822;
+            --card-border: rgba(0, 229, 255, 0.15);
+            --primary-neon: #00e5ff;
+            --secondary-neon: #7000ff;
+            --accent-gold: #ffb700;
+            --accent-green: #00ff88;
+            --text-main: #f0f4f8;
+            --text-muted: #8a99ad;
+            --offensive: #ff4d5e;
+            --defensive: #7cc8ff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(112, 0, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 40%);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .top-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 10px; color: var(--primary-neon);
+            text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 10px 20px;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateX(-3px); }
+
+        .home-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+            color: var(--primary-neon); text-decoration: none; font-size: 1.1rem;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .home-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateY(-2px); }
+
+        .hero {
+            text-align: center; padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(19, 24, 34, 0.9), rgba(11, 14, 20, 0.95));
+            border: 1px solid var(--card-border); border-radius: 20px;
+            margin-bottom: 40px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 2px;
+            text-transform: uppercase; background: linear-gradient(90deg, #ffffff, var(--primary-neon));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px;
+        }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+
+        .hero-badge {
+            display: inline-block; padding: 6px 16px; background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--primary-neon); border-radius: 50px; color: var(--primary-neon);
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px;
+        }
+
+        .stats-bar {
+            display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 22px;
+        }
+        .stats-bar span {
+            padding: 6px 16px; background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border);
+            border-radius: 50px; color: var(--text-muted); font-size: 0.85rem; font-weight: 600;
+        }
+
+        .section-header { display: flex; align-items: center; gap: 12px; margin: 40px 0 20px 0; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
+        .section-header i { font-size: 1.5rem; color: var(--primary-neon); }
+        .section-header h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Reading guide (same look as the table cards) */
+        .guide-notes {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        .guide-notes h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-neon);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .guide-notes ul { padding-left: 22px; color: var(--text-muted); }
+        .guide-notes li { margin-bottom: 10px; line-height: 1.6; }
+        .guide-notes li strong { color: #ffffff; }
+        .reliability-warning {
+            margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-style: italic; line-height: 1.6; color: var(--accent-gold);
+        }
+
+        /* Section header tints */
+        .section-header.offensive { border-bottom-color: rgba(255, 77, 94, 0.35); }
+        .section-header.offensive i { color: var(--offensive); }
+        .section-header.defensive { border-bottom-color: rgba(124, 200, 255, 0.35); }
+        .section-header.defensive i { color: var(--defensive); }
+        .stats-bar span.off { border-color: rgba(255, 77, 94, 0.45); color: var(--offensive); }
+        .stats-bar span.def { border-color: rgba(124, 200, 255, 0.45); color: var(--defensive); }
+
+        /* Playstyle cards: border leans red (Offensive) or light blue (Defensive) */
+        .playstyles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .playstyle-card {
+            --accent: var(--primary-neon);
+            --accent-border: var(--card-border);
+            --accent-glow: rgba(0, 229, 255, 0.08);
+            background-color: var(--card-bg);
+            border: 1px solid var(--accent-border);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        .playstyle-card.offensive { --accent: var(--offensive); --accent-border: rgba(255, 77, 94, 0.45); --accent-glow: rgba(255, 77, 94, 0.14); }
+        .playstyle-card.defensive { --accent: var(--defensive); --accent-border: rgba(124, 200, 255, 0.45); --accent-glow: rgba(124, 200, 255, 0.14); }
+        .playstyle-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            background-color: #151b27;
+            box-shadow: 0 8px 24px var(--accent-glow);
+        }
+
+        .playstyle-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+        .playstyle-name {
+            font-family: 'Orbitron', sans-serif; font-size: 1.05rem; font-weight: 700;
+            letter-spacing: 0.5px; line-height: 1.4; color: var(--primary-neon);
+        }
+
+        .type-badge {
+            flex-shrink: 0; white-space: nowrap;
+            font-size: 0.7rem; padding: 4px 12px; border-radius: 50px;
+            font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--accent); border: 1px solid var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .label {
+            display: block; margin-bottom: 6px;
+            font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase; color: #ffffff;
+        }
+        .playstyle-desc { font-size: 0.92rem; line-height: 1.6; color: var(--text-main); }
+
+        .positions {
+            margin-top: 16px; padding: 10px 12px; border-radius: 8px;
+            background: rgba(0, 229, 255, 0.05); border-left: 3px solid var(--accent);
+        }
+        .positions .label { color: var(--accent); }
+        .pos-list { display: flex; flex-wrap: wrap; gap: 6px; }
+        .pos {
+            padding: 3px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); color: var(--text-main);
+        }
+        .pos.none { font-weight: 400; font-style: italic; color: var(--text-muted); }
+
+        /* Skill search filter */
+        .search-bar {
+            position: sticky; top: 10px; z-index: 50;
+            display: flex; align-items: center; gap: 10px;
+            max-width: 560px; margin: 0 auto 30px auto; padding: 8px 16px;
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+            transition: border-color 0.3s ease;
+        }
+        .search-bar:focus-within { border-color: var(--primary-neon); }
+        .search-bar > i { color: var(--primary-neon); }
+        .search-bar input {
+            flex: 1; min-width: 0; background: transparent; border: none; outline: none;
+            color: var(--text-main); font-size: 16px; padding: 6px 0;
+            -webkit-appearance: none; appearance: none;
+        }
+        .search-bar input::placeholder { color: var(--text-muted); }
+        .search-bar input::-webkit-search-cancel-button { -webkit-appearance: none; }
+        .search-clear { display: none; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1rem; padding: 4px 6px; }
+        .search-clear:hover { color: var(--primary-neon); }
+        .search-count { font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; }
+        .no-results { display: none; text-align: center; color: var(--text-muted); padding: 40px 20px; font-size: 1.05rem; }
+
+        footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+
+        @media (max-width: 768px) {
+            .playstyles-grid { grid-template-columns: 1fr; }
+            .hero { padding: 35px 15px; }
+            .hero h1 { font-size: 1.9rem; }
+            .section-header h2 { font-size: 1.2rem; }
+            .back-btn { padding: 10px 14px; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="../game-mechanics.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Game Mechanics</a>
+        <a href="../index.html" class="home-btn" title="Back to Home"><i class="fa-solid fa-house"></i></a>
+    </nav>
+
+    <header class="hero">
+        <span class="hero-badge"><i class="fa-solid fa-chess-knight"></i> Playstyles Reference</span>
+        <h1>eFootball Playstyles</h1>
+        <p>Full Reference Guide</p>
+        <div class="stats-bar">
+            <span class="off">Offensive: 25</span>
+            <span class="def">Defensive: 11</span>
+            <span>Total: 36</span>
+        </div>
+    </header>
+
+    <!-- Playstyle search -->
+    <div class="search-bar" role="search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="playstyleSearch" placeholder="Search playstyle by name (e.g. Tar...)" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Search playstyle by name">
+        <button type="button" class="search-clear" id="searchClear" aria-label="Clear search"><i class="fa-solid fa-xmark"></i></button>
+        <span class="search-count" id="searchCount"></span>
+    </div>
+    <div class="no-results" id="noResults">No playstyle found with this name.</div>
+    <div class="section-header category-title offensive">
+        <i class="fa-solid fa-crosshairs"></i>
+        <h2>Offensive Playstyles - 25</h2>
+    </div>
+    <div class="playstyles-grid">
+        <!-- Goal Poacher -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Goal Poacher</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A predatory striker who plays off the shoulders of the last defender.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">CF</span></div></div>
+        </div>
+        <!-- Dummy Runner -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Dummy Runner</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A player who attracts the defence to create space for other players to exploit.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">CF</span><span class="pos">SS</span><span class="pos">AMF</span></div></div>
+        </div>
+        <!-- Fox in the Box -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Fox in the Box</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A striker who lurks in the opposition 18 yard box just waiting for the ball.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">CF</span></div></div>
+        </div>
+        <!-- Target Man -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Target Man</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A player that positions himself on the frontlines as a target man, and protects the ball with his physique.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">CF</span></div></div>
+        </div>
+        <!-- Deep-lying Forward -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Deep-lying Forward</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A forward player that is willing to fall back to receive the ball and help create plays.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">CF</span><span class="pos">SS</span></div></div>
+        </div>
+        <!-- Prolific Winger -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Prolific Winger</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A player who positions himself on the wing to receive passes, occasionally cutting into the centre when the opportunity arises.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">RWF</span><span class="pos">LWF</span></div></div>
+        </div>
+        <!-- Roaming Flank -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Roaming Flank</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A player who tends to cut inside from the wing to receive passes.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">RWF</span><span class="pos">LWF</span><span class="pos">RMF</span><span class="pos">LMF</span></div></div>
+        </div>
+        <!-- Cross Specialist -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Cross Specialist</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A player who hugs the touchline, waiting for a chance to cross the ball in.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">RWF</span><span class="pos">LWF</span><span class="pos">RMF</span><span class="pos">LMF</span></div></div>
+        </div>
+        <!-- Classic No. 10 -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Classic No. 10</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Takes a high position to initiate attacks and also goes for goal themselves when the chance arises.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">SS</span><span class="pos">AMF</span></div></div>
+        </div>
+        <!-- Creative Playmaker -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Creative Playmaker</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A player who takes advantage of any opening in the defence to initiate attacks and assist in shots on goal.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">SS</span><span class="pos">RWF</span><span class="pos">LWF</span><span class="pos">AMF</span><span class="pos">RMF</span><span class="pos">LMF</span></div></div>
+        </div>
+        <!-- Hole Player -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Hole Player</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A player who looks to make runs into the opposition goal area when the team is on the attack.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">SS</span><span class="pos">AMF</span><span class="pos">RMF</span><span class="pos">LMF</span><span class="pos">CMF</span></div></div>
+        </div>
+        <!-- Box-to-Box -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Box-to-Box</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A player who tirelessly covers every blade of grass for the full 90 minutes.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">RMF</span><span class="pos">LMF</span><span class="pos">CMF</span><span class="pos">DMF</span></div></div>
+        </div>
+        <!-- Anchor Man -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Anchor Man</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A deep sitting defensive midfielder protecting the backline.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">DMF</span></div></div>
+        </div>
+        <!-- The Destroyer -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">The Destroyer</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Applies pressure aggressively when close to an opponent who has the ball.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">CMF</span><span class="pos">DMF</span><span class="pos">RB</span><span class="pos">LB</span><span class="pos">CB</span></div></div>
+        </div>
+        <!-- Orchestrator -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Orchestrator</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A player who lurks in deeper positions, ready to initiate attacks.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">CMF</span><span class="pos">DMF</span></div></div>
+        </div>
+        <!-- Extra Frontman -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Extra Frontman</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A defender who likes to join in the attack and lay siege on the opposition goal at every given opportunity.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">CB</span></div></div>
+        </div>
+        <!-- Defensive Full-back -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Defensive Full-back</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>A solid full-back who prefers to stay back and stick to defensive duties.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">RB</span><span class="pos">LB</span></div></div>
+        </div>
+        <!-- Build Up -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Build Up</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>From a deep position, takes part in setting up attacks.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">CB</span></div></div>
+        </div>
+        <!-- Attacking Full-back -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Attacking Full-back</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>An attack-minded full-back who will run upfield and join the attack when presented with a chance.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">RB</span><span class="pos">LB</span></div></div>
+        </div>
+        <!-- Full-back Finisher -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Full-back Finisher</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>An attacking full-back who enjoys joining the attack in high central areas.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">RB</span><span class="pos">LB</span></div></div>
+        </div>
+        <!-- Attacking GK -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Attacking GK</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Comes out aggressively to limit shooting angles and respond to balls sent behind the defence.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">GK</span></div></div>
+        </div>
+        <!-- Defensive GK -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Defensive GK</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Holds a position near their goal and refrains from rushing out aggressively.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">GK</span></div></div>
+        </div>
+        <!-- Build-up GK -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Build-up GK</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Takes a high position and participates in build-up play when a teammate has the ball.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">GK</span></div></div>
+        </div>
+        <!-- High Line GK -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">High Line GK</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Takes a high position when attacking, covering the area behind the defence to thwart counter attacks.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">GK</span></div></div>
+        </div>
+        <!-- Basic -->
+        <div class="playstyle-card offensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Basic</h3>
+                    <span class="type-badge">Offensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Does not use a dedicated playing style.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos none">No specific position indicated</span></div></div>
+        </div>
+    </div>
+
+    <div class="section-header category-title defensive">
+        <i class="fa-solid fa-shield-halved"></i>
+        <h2>Defensive Playstyles - 11</h2>
+    </div>
+    <div class="playstyles-grid">
+        <!-- Press Back -->
+        <div class="playstyle-card defensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Press Back</h3>
+                    <span class="type-badge">Defensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Moves back aggressively from the front line into their own half to pressure the ball.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos none">No specific position indicated</span></div></div>
+        </div>
+        <!-- Front Line Pressure -->
+        <div class="playstyle-card defensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Front Line Pressure</h3>
+                    <span class="type-badge">Defensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Presses the opposing keeper and defenders aggressively from the top of the front line.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">CF</span><span class="pos">SS</span><span class="pos">RWF</span><span class="pos">LWF</span></div></div>
+        </div>
+        <!-- Front Line Poacher -->
+        <div class="playstyle-card defensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Front Line Poacher</h3>
+                    <span class="type-badge">Defensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Watches the opponent&#x27;s passing lanes and takes up smart positions.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">CF</span><span class="pos">SS</span><span class="pos">RWF</span><span class="pos">LWF</span></div></div>
+        </div>
+        <!-- Attack Outlet -->
+        <div class="playstyle-card defensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Attack Outlet</h3>
+                    <span class="type-badge">Defensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Avoids defending to save energy depending on the situation and remains up front waiting to attack.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">CF</span><span class="pos">SS</span><span class="pos">RWF</span><span class="pos">LWF</span><span class="pos">AMF</span></div></div>
+        </div>
+        <!-- All-action Defender -->
+        <div class="playstyle-card defensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">All-action Defender</h3>
+                    <span class="type-badge">Defensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Runs back aggressively when the team is defending and responds to the opponent&#x27;s attacks.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">AMF</span><span class="pos">RMF</span><span class="pos">LMF</span><span class="pos">CMF</span><span class="pos">DMF</span></div></div>
+        </div>
+        <!-- Pass Disruptor -->
+        <div class="playstyle-card defensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Pass Disruptor</h3>
+                    <span class="type-badge">Defensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Defends by actively blocking the opponent&#x27;s passing lanes.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">AMF</span><span class="pos">RMF</span><span class="pos">LMF</span><span class="pos">CMF</span><span class="pos">DMF</span></div></div>
+        </div>
+        <!-- Covering Role -->
+        <div class="playstyle-card defensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Covering Role</h3>
+                    <span class="type-badge">Defensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Actively covers for teammates conducting Match-up roles.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">CMF</span><span class="pos">DMF</span><span class="pos">RB</span><span class="pos">LB</span><span class="pos">CB</span></div></div>
+        </div>
+        <!-- High Line Master -->
+        <div class="playstyle-card defensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">High Line Master</h3>
+                    <span class="type-badge">Defensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Looks to maintain an effective defensive line, keeping the shape intact as they defend.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">RB</span><span class="pos">LB</span><span class="pos">CB</span></div></div>
+        </div>
+        <!-- Tough Marker -->
+        <div class="playstyle-card defensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Tough Marker</h3>
+                    <span class="type-badge">Defensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Marks an attacker aggressively, limiting the space between them.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">DMF</span><span class="pos">RB</span><span class="pos">LB</span><span class="pos">CB</span></div></div>
+        </div>
+        <!-- Deep Defender -->
+        <div class="playstyle-card defensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Deep Defender</h3>
+                    <span class="type-badge">Defensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>When marking, leaves space between them and the attacker, looking to protect the space in behind.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">RB</span><span class="pos">LB</span><span class="pos">CB</span></div></div>
+        </div>
+        <!-- Sweeper GK -->
+        <div class="playstyle-card defensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Sweeper GK</h3>
+                    <span class="type-badge">Defensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Takes a high position and rushes out aggressively to cover a wide area behind the defence.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos">GK</span></div></div>
+        </div>
+        <!-- Basic -->
+        <div class="playstyle-card defensive">
+            <div>
+                <div class="playstyle-header">
+                    <h3 class="playstyle-name">Basic</h3>
+                    <span class="type-badge">Defensive</span>
+                </div>
+                <div class="playstyle-desc"><span class="label">Description</span>Does not use a dedicated playing style.</div>
+            </div>
+            <div class="positions"><span class="label">Positions</span><div class="pos-list"><span class="pos none">No specific position indicated</span></div></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>eFootball Wiki · Playstyles Section</p>
+    </footer>
+</div>
+
+<script>
+(function () {
+    var input = document.getElementById('playstyleSearch');
+    var clearBtn = document.getElementById('searchClear');
+    var countEl = document.getElementById('searchCount');
+    var noResults = document.getElementById('noResults');
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.playstyle-card'));
+    var groups = Array.prototype.slice.call(document.querySelectorAll('.category-title')).map(function (title) {
+        var grid = title.nextElementSibling;
+        while (grid && !grid.classList.contains('playstyles-grid')) grid = grid.nextElementSibling;
+        return { title: title, grid: grid };
+    });
+
+    // Lowercase, strip accents, drop everything that is not a letter or digit
+    function norm(str) {
+        return str.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]/g, '');
+    }
+
+    // Names are matched from their start; a leading "The" is optional ("The Destroyer" -> "dest" works)
+    var names = cards.map(function (card) {
+        var n = card.querySelector('.playstyle-name').textContent;
+        return [norm(n), norm(n.replace(/^the\s+/i, ''))];
+    });
+
+    function applyFilter() {
+        var q = norm(input.value);
+        var visible = 0;
+
+        cards.forEach(function (card, i) {
+            var match = q === '' || names[i][0].indexOf(q) === 0 || names[i][1].indexOf(q) === 0;
+            card.style.display = match ? '' : 'none';
+            if (match) visible++;
+        });
+
+        groups.forEach(function (g) {
+            var any = g.grid && g.grid.querySelector('.playstyle-card:not([style*="display: none"])');
+            var show = q === '' || !!any;
+            g.title.style.display = show ? '' : 'none';
+            if (g.grid) g.grid.style.display = show ? '' : 'none';
+        });
+
+        clearBtn.style.display = input.value ? 'block' : 'none';
+        countEl.textContent = q === '' ? '' : visible + ' / ' + cards.length;
+        noResults.style.display = (q !== '' && visible === 0) ? 'block' : 'none';
+    }
+
+    input.addEventListener('input', applyFilter);
+    input.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { input.value = ''; applyFilter(); }
+    });
+    clearBtn.addEventListener('click', function () {
+        input.value = '';
+        applyFilter();
+        input.focus();
+    });
+})();
+</script>
+</body>
+</html>

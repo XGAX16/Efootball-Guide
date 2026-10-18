@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eFootball Wiki | Ultimate Knowledge Hub</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #131822;
+            --card-border: rgba(0, 229, 255, 0.15);
+            --primary-neon: #00e5ff;
+            --secondary-neon: #7000ff;
+            --accent-green: #00ff88;
+            --text-main: #f0f4f8;
+            --text-muted: #8a99ad;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(112, 0, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Banner */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(19, 24, 34, 0.9), rgba(11, 14, 20, 0.95));
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 229, 255, 0.05);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ffffff, var(--primary-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            max-width: 700px;
+            margin: 0 auto 25px auto;
+            line-height: 1.6;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--primary-neon);
+            border-radius: 50px;
+            color: var(--primary-neon);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        /* Grid Section - 2x2 Layout */
+        .wiki-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 25px;
+        }
+
+        /* Category Card */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-neon);
+            box-shadow: 0 10px 25px rgba(0, 229, 255, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(112, 0, 255, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--primary-neon);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        .card-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .card h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin-top: 2px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-neon);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .card-footer i {
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-footer i {
+            transform: translateX(5px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Hero Header -->
+        <header class="hero">
+            <span class="badge"><i class="fa-solid fa-gamepad"></i> Knowledge Hub</span>
+            <h1>eFootball Wiki</h1>
+            <p>Your ultimate comprehensive guide for eFootball. Discover game mechanics, optimized player builds, pack probabilities, and custom tools.</p>
+        </header>
+
+        <!-- Main Categories Grid (4 Cards) -->
+        <main class="wiki-grid">
+
+            <!-- 01 · GAME MECHANICS -->
+            <a href="game-mechanics.html" class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="icon-box"><i class="fa-solid fa-gamepad"></i></div>
+                        <div>
+                            <span class="card-number">CATEGORY 01</span>
+                            <h2>Game Mechanics</h2>
+                        </div>
+                    </div>
+                    <p>Master advanced controls, Stunning Shots, manual defending, player skills, and core gameplay fundamentals.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Explore Guides</span> <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- 02 · PACKS & PROBABILITY -->
+            <a href="packs.html" class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="icon-box"><i class="fa-solid fa-coins"></i></div>
+                        <div>
+                            <span class="card-number">CATEGORY 02</span>
+                            <h2>Packs & Probability</h2>
+                        </div>
+                    </div>
+                    <p>Analyze pack odds, probability calculations, coin management strategies, and value assessments for current banners.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Explore Guides</span> <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- 03 · PLAYER BUILDS -->
+            <a href="player-builds.html" class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="icon-box"><i class="fa-solid fa-sliders"></i></div>
+                        <div>
+                            <span class="card-number">CATEGORY 03</span>
+                            <h2>Player Builds</h2>
+                        </div>
+                    </div>
+                    <p>Optimal stat training allocations, skill additions, and progression builds for Epic, Highlight, and Meta cards.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Explore Guides</span> <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- 04 · TOOLS & CALCULATORS -->
+            <a href="tools.html" class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="icon-box"><i class="fa-solid fa-calculator"></i></div>
+                        <div>
+                            <span class="card-number">CATEGORY 04</span>
+                            <h2>Tools & Calculators</h2>
+                        </div>
+                    </div>
+                    <p>Access custom tools for experience point calculations, player stat comparisons, and tactical simulations.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Explore Guides</span> <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+        </main>
+
+        <footer>
+            <p>Knowledge first. Better decisions. Better eFootball.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

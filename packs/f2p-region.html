@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F2P Region | eFootball Wiki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #131822;
+            --card-border: rgba(0, 229, 255, 0.15);
+            --primary-neon: #00e5ff;
+            --secondary-neon: #7000ff;
+            --accent-gold: #ffb700;
+            --arrow-top: #00ff88;
+            --arrow-up-right: #00e5ff;
+            --arrow-right: #8a99ad;
+            --arrow-down-right: #ff9900;
+            --arrow-down: #ff3366;
+            --text-main: #f0f4f8;
+            --text-muted: #8a99ad;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(112, 0, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 40%);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .top-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 10px; color: var(--primary-neon);
+            text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 10px 20px;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateX(-3px); }
+
+        .home-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+            color: var(--primary-neon); text-decoration: none; font-size: 1.1rem;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .home-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateY(-2px); }
+
+        .hero {
+            text-align: center; padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(19, 24, 34, 0.9), rgba(11, 14, 20, 0.95));
+            border: 1px solid var(--card-border); border-radius: 20px;
+            margin-bottom: 40px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 2px;
+            text-transform: uppercase; background: linear-gradient(90deg, #ffffff, var(--primary-neon));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px;
+        }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+
+        .badge {
+            display: inline-block; padding: 6px 16px; background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--primary-neon); border-radius: 50px; color: var(--primary-neon);
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px;
+        }
+
+        /* Section Title */
+        .section-header { display: flex; align-items: center; gap: 12px; margin: 40px 0 20px 0; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
+        .section-header i { font-size: 1.5rem; color: var(--primary-neon); }
+        .section-header h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Table Card Container */
+        .table-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .table-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-neon);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Styled Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+
+        .data-table th {
+            background-color: rgba(0, 229, 255, 0.05);
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(0, 229, 255, 0.03);
+        }
+
+        .form-label-td {
+            font-weight: 700;
+            color: #ffffff;
+            text-align: left;
+            padding-left: 20px !important;
+        }
+
+        .rating-badge {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        .rating-A { background: rgba(0, 255, 136, 0.15); color: var(--arrow-top); border: 1px solid var(--arrow-top); }
+        .rating-B { background: rgba(0, 229, 255, 0.15); color: var(--arrow-up-right); border: 1px solid var(--arrow-up-right); }
+        .rating-C { background: rgba(138, 153, 173, 0.15); color: var(--arrow-right); border: 1px solid var(--arrow-right); }
+        .rating-D { background: rgba(255, 153, 0, 0.15); color: var(--arrow-down-right); border: 1px solid var(--arrow-down-right); }
+        .rating-E { background: rgba(255, 51, 102, 0.15); color: var(--arrow-down); border: 1px solid var(--arrow-down); }
+
+        /* Arrow Icons in Table Headers */
+        .arr-top { color: var(--arrow-top); font-size: 1.1rem; }
+        .arr-up-right { color: var(--arrow-up-right); font-size: 1.1rem; }
+        .arr-right { color: var(--arrow-right); font-size: 1.1rem; }
+        .arr-down-right { color: var(--arrow-down-right); font-size: 1.1rem; }
+        .arr-down { color: var(--arrow-down); font-size: 1.1rem; }
+
+        .zero-val { color: rgba(255, 255, 255, 0.2); }
+        .high-val { font-weight: 700; color: #ffffff; }
+
+        /* Epic Special Callout */
+        .epic-card-box {
+            background: linear-gradient(135deg, rgba(112, 0, 255, 0.1), rgba(19, 24, 34, 0.95));
+            border: 1px solid rgba(112, 0, 255, 0.4);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        .epic-card-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #d1b3ff;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 10px; }
+            .back-btn { padding: 10px 14px; font-size: 0.85rem; }
+            .hero { padding: 35px 15px; margin-bottom: 25px; }
+            .hero h1 { font-size: 1.9rem; letter-spacing: 1px; }
+            .hero p { font-size: 1rem; }
+            .section-header h2 { font-size: 1.2rem; }
+            .table-card, .epic-card-box { padding: 16px; }
+            .epic-card-box { margin-top: 25px; }
+            .table-card h3, .epic-card-box h3 { font-size: 1.05rem; }
+            .data-table th, .data-table td { padding: 10px 3px; font-size: 0.8rem; }
+            .data-table th { font-size: 0.6rem; letter-spacing: 0; }
+            .data-table th i { display: block; margin-bottom: 3px; font-size: 0.95rem; }
+            .data-table th:first-child, .form-label-td { padding-left: 8px !important; }
+            .rating-badge { padding: 3px 8px; }
+            footer { margin-top: 40px; }
+        }
+
+        footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+    
+        :root { --accent-green: #00ff88; }
+
+        /* Coin tables */
+        .coin-table { border-collapse: separate; border-spacing: 0; }
+        .coin-table th, .coin-table td { text-align: center; }
+        .coin-table th:first-child, .coin-table td:first-child { text-align: left; }
+        .coin-table td { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.05rem; }
+        .coin-table td:first-child { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; }
+        .mode { display: flex; align-items: center; gap: 12px; }
+        .mode i {
+            flex-shrink: 0; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 10px;
+            font-size: 1.1rem; color: var(--primary-neon); background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+        .coin-table tr.total td { --c: var(--primary-neon); color: var(--c); border-top: 1px solid var(--c); border-bottom: 1px solid var(--c); background: rgba(0, 229, 255, 0.06); font-weight: 900; }
+        .coin-table tr.total td:first-child { border-left: 1px solid var(--c); border-radius: 10px 0 0 10px; font-family: 'Orbitron', sans-serif; }
+        .coin-table tr.total td:last-child { border-right: 1px solid var(--c); border-radius: 0 10px 10px 0; }
+        .coin-table.morocco tr.total td { --c: var(--accent-green); background: rgba(0, 255, 136, 0.06); }
+        .region-note { margin-top: 14px; font-size: 0.85rem; line-height: 1.6; color: var(--text-muted); }
+        .region-note i { color: var(--accent-gold); margin-right: 6px; }
+
+        .takeaway {
+            display: flex; gap: 16px; align-items: flex-start; padding: 25px; border-radius: 16px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 229, 255, 0.08)); border: 1px solid var(--accent-green);
+        }
+        .takeaway > i { flex-shrink: 0; font-size: 1.5rem; color: var(--accent-green); margin-top: 2px; }
+        .takeaway p { line-height: 1.7; color: var(--text-main); }
+        .takeaway b { color: var(--accent-green); }
+
+        @media (max-width: 768px) {
+            .coin-table th, .coin-table td { padding: 10px 4px; font-size: 0.85rem; }
+            .coin-table td:first-child { font-size: 0.85rem; }
+            .coin-table th { font-size: 0.62rem; letter-spacing: 0; }
+            .mode { gap: 8px; }
+            .mode i { width: 30px; height: 30px; font-size: 0.9rem; }
+            .coin-table th:first-child, .coin-table td:first-child { padding-left: 8px; }
+            .takeaway { padding: 18px; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="top-nav">
+            <a href="../packs.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Packs &amp; Probability</a>
+            <a href="../index.html" class="home-btn" title="Back to Home"><i class="fa-solid fa-house"></i></a>
+        </nav>
+
+        <header class="hero">
+            <span class="badge"><i class="fa-solid fa-globe"></i> Section 2.3</span>
+            <h1>F2P Region</h1>
+            <p>eFootball Coins Guide: F2P Optimization. A comparison between a standard region (with no advertisement rewards) and a region like Morocco, which includes daily ad rewards. A highly useful method for Free-to-Play players to maximize their coin earnings by spending just a few seconds a day.</p>
+        </header>
+
+        <div class="section-header">
+            <i class="fa-solid fa-flag"></i>
+            <h2>Standard Region</h2>
+        </div>
+
+        <div class="table-card">
+            <table class="data-table coin-table ">
+                <thead>
+                    <tr><th>Mode</th><th>Weekly</th><th>Monthly</th><th>Annual</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><div class="mode"><i class="fa-solid fa-calendar-check"></i><span>Login</span></div></td><td>50</td><td>200</td><td>2,400</td></tr><tr><td><div class="mode"><i class="fa-solid fa-futbol"></i><span>Event matches</span></div></td><td>100</td><td>400</td><td>4,800</td></tr>
+                    <tr class="total"><td>TOT</td><td>150</td><td>600</td><td>7,200</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-header">
+            <i class="fa-solid fa-circle-play"></i>
+            <h2>Morocco Region</h2>
+        </div>
+
+        <div class="table-card">
+            <table class="data-table coin-table morocco">
+                <thead>
+                    <tr><th>Mode</th><th>Weekly</th><th>Monthly</th><th>Annual</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><div class="mode"><i class="fa-solid fa-circle-play"></i><span>Daily videos</span></div></td><td>70</td><td>280</td><td>3,360</td></tr>
+                    <tr class="total"><td>TOT</td><td>220</td><td>880</td><td>10,560</td></tr>
+                </tbody>
+            </table>
+            <p class="region-note"><i class="fa-solid fa-circle-info"></i>Every day chance to get from 0 to 100 coins, not counted in the chart. TOT includes the standard region earnings.</p>
+        </div>
+
+        <div class="section-header">
+            <i class="fa-solid fa-key"></i>
+            <h2>Key Takeaway for Players</h2>
+        </div>
+
+        <div class="takeaway">
+            <i class="fa-solid fa-coins"></i>
+            <p>By simply switching to the Morocco region and watching short daily videos, players can increase their yearly earnings from <b>7,200 coins</b> to <b>10,560 coins</b> (plus the random 0-100 daily coin drops), making it an essential trick for anyone playing without spending real money.</p>
+        </div>
+
+        <footer>
+            <p>eFootball Wiki · F2P Region</p>
+        </footer>
+    </div>
+
+</body>
+</html>

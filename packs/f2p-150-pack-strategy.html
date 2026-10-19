@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F2P 150-Pack Strategy | eFootball Wiki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #131822;
+            --card-border: rgba(0, 229, 255, 0.15);
+            --primary-neon: #00e5ff;
+            --secondary-neon: #7000ff;
+            --accent-gold: #ffb700;
+            --accent-green: #00ff88;
+            --accent-red: #ff3366;
+            --text-main: #f0f4f8;
+            --text-muted: #8a99ad;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(112, 0, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 40%);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .top-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 10px; color: var(--primary-neon);
+            text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 10px 20px;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateX(-3px); }
+
+        .home-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+            color: var(--primary-neon); text-decoration: none; font-size: 1.1rem;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .home-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateY(-2px); }
+
+        .hero {
+            text-align: center; padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(19, 24, 34, 0.9), rgba(11, 14, 20, 0.95));
+            border: 1px solid var(--card-border); border-radius: 20px;
+            margin-bottom: 40px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 2px;
+            text-transform: uppercase; background: linear-gradient(90deg, #ffffff, var(--primary-neon));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px;
+        }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+
+        .badge {
+            display: inline-block; padding: 6px 16px; background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--primary-neon); border-radius: 50px; color: var(--primary-neon);
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px;
+        }
+
+        .section-header { display: flex; align-items: center; gap: 12px; margin: 40px 0 20px 0; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
+        .section-header i { font-size: 1.5rem; color: var(--primary-neon); }
+        .section-header h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Table Card Container */
+        .table-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .table-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-neon);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .data-table th {
+            background-color: rgba(0, 229, 255, 0.05);
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(0, 229, 255, 0.03);
+        }
+
+        .param-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--primary-neon);
+            white-space: nowrap;
+        }
+
+        .metric-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+
+        .visual-only {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 10px; }
+            .back-btn { padding: 10px 14px; font-size: 0.85rem; }
+            .hero { padding: 35px 15px; margin-bottom: 25px; }
+            .hero h1 { font-size: 1.9rem; letter-spacing: 1px; }
+            .hero p { font-size: 1rem; }
+            .section-header h2 { font-size: 1.2rem; }
+            .table-card { padding: 18px; }
+            .table-card h3 { font-size: 1.1rem; }
+
+            /* Tables become stacked rows */
+            .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
+            .data-table thead { display: none; }
+            .data-table tr { padding: 14px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+            .data-table tr:last-child { border-bottom: none; }
+            .data-table td { padding: 4px 0; border-bottom: none; }
+            .param-name, .metric-name { white-space: normal; font-size: 1rem; }
+            .data-table td[data-label]::before {
+                content: attr(data-label);
+                display: block; margin-bottom: 2px;
+                font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 700;
+                letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted);
+            }
+        }
+    
+        /* Spending tiers */
+        .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 25px; }
+        .tier-card {
+            --accent: var(--primary-neon); --accent-border: rgba(0, 229, 255, 0.4); --accent-bg: rgba(0, 229, 255, 0.08);
+            display: flex; flex-direction: column; gap: 16px;
+            background-color: var(--card-bg); border: 1px solid var(--accent-border); border-radius: 16px; padding: 28px; transition: all 0.3s ease;
+        }
+        .tier-card.dont { --accent: var(--accent-red); --accent-border: rgba(255, 51, 102, 0.4); --accent-bg: rgba(255, 51, 102, 0.08); }
+        .tier-card.exceptional { --accent: var(--accent-gold); --accent-border: rgba(255, 183, 0, 0.4); --accent-bg: rgba(255, 183, 0, 0.08); }
+        .tier-card.guaranteed { --accent: var(--accent-green); --accent-border: rgba(0, 255, 136, 0.4); --accent-bg: rgba(0, 255, 136, 0.08); }
+        .tier-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 8px 24px var(--accent-bg); }
+        .tier-coins { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 800; color: #ffffff; }
+        .tier-draws { margin-top: 4px; font-size: 0.85rem; color: var(--text-muted); }
+        .tier-badge {
+            align-self: flex-start; padding: 5px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--accent); border: 1px solid var(--accent); background: var(--accent-bg);
+        }
+        .odds-intro { font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+        .odds { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .odds li { display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+        .odds li::before { content: ''; flex-shrink: 0; width: 8px; height: 8px; margin-top: 7px; border-radius: 50%; background: var(--accent); }
+        .odds b { color: var(--accent); }
+        .tier-tip { padding: 10px 14px; border-radius: 10px; font-size: 0.9rem; color: var(--accent); background: var(--accent-bg); border-left: 3px solid var(--accent); }
+
+        /* Golden rule */
+        .rule-text { color: var(--text-muted); line-height: 1.7; margin-bottom: 18px; }
+        .callout { display: flex; align-items: flex-start; gap: 12px; padding: 14px 18px; border-radius: 10px; line-height: 1.6; font-size: 0.95rem; margin-top: 14px; }
+        .callout i { margin-top: 4px; }
+        .callout.good { color: var(--accent-green); background: rgba(0, 255, 136, 0.08); border: 1px solid rgba(0, 255, 136, 0.3); }
+        .callout.warn { color: var(--accent-gold); background: rgba(255, 183, 0, 0.08); border: 1px solid rgba(255, 183, 0, 0.3); }
+
+        @media (max-width: 768px) {
+            .tier-grid { gap: 16px; }
+            .tier-card { padding: 20px; }
+            .tier-coins { font-size: 1.2rem; }
+            .callout { padding: 12px 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="top-nav">
+            <a href="../packs.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Packs &amp; Probability</a>
+            <a href="../index.html" class="home-btn" title="Back to Home"><i class="fa-solid fa-house"></i></a>
+        </nav>
+
+        <header class="hero">
+            <span class="badge"><i class="fa-solid fa-boxes-stacked"></i> Section 2.2</span>
+            <h1>F2P 150-Pack Strategy</h1>
+            <p>When should you spend your coins? Managing your eFootball coins effectively is crucial for Free-to-Play (F2P) players. This guide outlines the exact probabilities and thresholds to consider before pulling from a 150-player Epic pack.</p>
+        </header>
+
+        <div class="section-header">
+            <i class="fa-solid fa-chart-simple"></i>
+            <h2>Spending Thresholds &amp; Odds</h2>
+        </div>
+
+        <div class="tier-grid">
+            <div class="tier-card dont">
+                <div>
+                    <div class="tier-coins">&lt; 3,000 Coins</div>
+                    <div class="tier-draws">&lt; 30 draws</div>
+                </div>
+                <span class="tier-badge">Don't Spend</span>
+                <div>
+                    
+                    <ul class="odds"><li><b>~49%</b> chance of getting at least 1 Epic.</li><li>More than <b>50%</b> chance of walking away with nothing.</li></ul>
+                </div>
+            </div>
+            <div class="tier-card exceptional">
+                <div>
+                    <div class="tier-coins">3,000 – 6,000 Coins</div>
+                    <div class="tier-draws">30–60 draws</div>
+                </div>
+                <span class="tier-badge">Spend only if pack is exceptional</span>
+                <div>
+                    <div class="odds-intro">With 60 draws:</div>
+                    <ul class="odds"><li><b>~79%</b> chance of getting at least 1 Epic</li><li><b>~31%</b> chance of getting at least 2 Epics</li><li><b>~6%</b> chance of getting all 3 Epics</li></ul>
+                </div>
+            </div>
+            <div class="tier-card upgrade">
+                <div>
+                    <div class="tier-coins">6,000 – 10,000 Coins</div>
+                    <div class="tier-draws">60–100 draws</div>
+                </div>
+                <span class="tier-badge">Spend if 2+ Epics upgrade your squad</span>
+                <div>
+                    <div class="odds-intro">With 100 draws:</div>
+                    <ul class="odds"><li><b>~97%</b> chance of getting at least 1 Epic</li><li><b>~74%</b> chance of getting at least 2 Epics</li><li><b>~29%</b> chance of getting all 3 Epics</li></ul>
+                </div>
+            </div>
+            <div class="tier-card guaranteed">
+                <div>
+                    <div class="tier-coins">13,500 Coins</div>
+                    <div class="tier-draws">150 draws</div>
+                </div>
+                <span class="tier-badge">Guaranteed Pool Clear</span>
+                <div>
+                    
+                    <ul class="odds"><li><b>100%</b> guaranteed chance to clear the entire pool and get all 3 Epics.</li></ul>
+                </div>
+                <div class="tier-tip"><i class="fa-solid fa-lightbulb"></i> Tip: Consider stopping early if you obtain 1 or 2 target Epics.</div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <i class="fa-solid fa-lightbulb"></i>
+            <h2>The Golden Rule for F2P Players</h2>
+        </div>
+
+        <div class="table-card">
+            <p class="rule-text">The most common mistake is spending 900–1,800 coins on every new pack. This often leaves you with no Epics—and not enough coins when a truly great pack arrives.</p>
+            <div class="callout good">
+                <i class="fa-solid fa-circle-check"></i>
+                <span><strong>Best practice:</strong> Save your coins, skip average packs, and only invest when a pack contains at least 2–3 Epics that would genuinely improve your squad. In the long run, this is the most efficient strategy.</span>
+            </div>
+            <div class="callout warn">
+                <i class="fa-solid fa-circle-info"></i>
+                <span><strong>Note:</strong> When there is a 10 spin discounted to 500 it is always worth buying it.</span>
+            </div>
+        </div>
+
+        <footer>
+            <p>eFootball Wiki · F2P 150-Pack Strategy</p>
+        </footer>
+    </div>
+
+</body>
+</html>

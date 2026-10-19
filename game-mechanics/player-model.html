@@ -145,6 +145,33 @@
         }
 
         footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 10px; }
+            .back-btn { padding: 10px 14px; font-size: 0.85rem; }
+            .hero { padding: 35px 15px; margin-bottom: 25px; }
+            .hero h1 { font-size: 1.9rem; letter-spacing: 1px; }
+            .hero p { font-size: 1rem; }
+            .section-header h2 { font-size: 1.2rem; }
+            .table-card { padding: 18px; }
+            .table-card h3 { font-size: 1.1rem; }
+
+            /* Tables become stacked rows */
+            .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
+            .data-table thead { display: none; }
+            .data-table tr { padding: 14px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+            .data-table tr:last-child { border-bottom: none; }
+            .data-table td { padding: 4px 0; border-bottom: none; }
+            .param-name, .metric-name { white-space: normal; font-size: 1rem; }
+            .data-table td[data-label]::before {
+                content: attr(data-label);
+                display: block; margin-bottom: 2px;
+                font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 700;
+                letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted);
+            }
+        }
     </style>
 </head>
 <body>
@@ -182,28 +209,28 @@
                 <tbody>
                     <tr>
                         <td class="param-name">Leg Coverage</td>
-                        <td>The diameter / reach of a player’s leg extensions.</td>
-                        <td>Crucial for Defenders and Center Forwards. Higher leg coverage dramatically improves interception reach, tackle success, and ability to reach the ball in crowded penalty boxes.</td>
+                        <td data-label="Definition">The diameter / reach of a player’s leg extensions.</td>
+                        <td data-label="Gameplay Impact">Crucial for Defenders and Center Forwards. Higher leg coverage dramatically improves interception reach, tackle success, and ability to reach the ball in crowded penalty boxes.</td>
                     </tr>
                     <tr>
                         <td class="param-name">Arm Coverage</td>
-                        <td>The distance a player can extend their arms.</td>
-                        <td>Vital for Goalkeepers to make acrobatic saves. For outfield players (especially defenders), arm coverage helps push away, pull back, and physically disrupt opponents.</td>
+                        <td data-label="Definition">The distance a player can extend their arms.</td>
+                        <td data-label="Gameplay Impact">Vital for Goalkeepers to make acrobatic saves. For outfield players (especially defenders), arm coverage helps push away, pull back, and physically disrupt opponents.</td>
                     </tr>
                     <tr>
                         <td class="param-name">Leg Length-Based Height</td>
-                        <td>A quick baseline metric.</td>
-                        <td>Used when standard Leg Coverage calculations feel too complex.</td>
+                        <td data-label="Definition">A quick baseline metric.</td>
+                        <td data-label="Gameplay Impact">Used when standard Leg Coverage calculations feel too complex.</td>
                     </tr>
                     <tr>
                         <td class="param-name">Torso Collision</td>
-                        <td>Dictates physical collisions when arms and legs are not extended.</td>
-                        <td>Directly governs shielding strength. Its gameplay impact operates at roughly a 1:1 ratio with Weight.</td>
+                        <td data-label="Definition">Dictates physical collisions when arms and legs are not extended.</td>
+                        <td data-label="Gameplay Impact">Directly governs shielding strength. Its gameplay impact operates at roughly a 1:1 ratio with Weight.</td>
                     </tr>
                     <tr>
                         <td class="param-name">Jump Height</td>
-                        <td>The absolute maximum height a player can reach during an aerial contest.</td>
-                        <td>
+                        <td data-label="Definition">The absolute maximum height a player can reach during an aerial contest.</td>
+                        <td data-label="Gameplay Impact">
                             <strong>Baseline Calculation:</strong> At 40 Jump stat, a player jumps 54 cm. Each additional jump point adds 0.666 cm.<br>
                             <em>Game Mechanics Note:</em> Due to physical pressure during aerial duels, actual jump height often drops by around 0.5 cm unless the player has the <strong>Aerial Fort</strong> skill (which ensures consistent peak jump height).
                         </td>
@@ -230,35 +257,35 @@
                 <tbody>
                     <tr>
                         <td class="metric-name">Height</td>
-                        <td>The primary factor driving all 5 Core Parameters. Controls touch frequency alongside dribbling stats. Dribbling smoothness drops noticeably at 174 cm and peaks between 166 cm and 173 cm. Taller players feel clunkier regardless of high dribbling stats unless they possess the <strong>Momentum Dribbling</strong> skill.</td>
+                        <td data-label="Gameplay Effect">The primary factor driving all 5 Core Parameters. Controls touch frequency alongside dribbling stats. Dribbling smoothness drops noticeably at 174 cm and peaks between 166 cm and 173 cm. Taller players feel clunkier regardless of high dribbling stats unless they possess the <strong>Momentum Dribbling</strong> skill.</td>
                     </tr>
                     <tr>
                         <td class="metric-name">Weight</td>
-                        <td>Alters the overall volume of the player model (wider body). Has a roughly 1:1 effect on Torso Collision. <em>Note: Higher weight does NOT make a player feel heavier when dribbling.</em></td>
+                        <td data-label="Gameplay Effect">Alters the overall volume of the player model (wider body). Has a roughly 1:1 effect on Torso Collision. <em>Note: Higher weight does NOT make a player feel heavier when dribbling.</em></td>
                     </tr>
                     <tr>
                         <td class="metric-name">Neck Length</td>
-                        <td>Alters actual physical height in-game (e.g., 14 Neck Length makes a player 2 cm taller than 7 Neck Length).</td>
+                        <td data-label="Gameplay Effect">Alters actual physical height in-game (e.g., 14 Neck Length makes a player 2 cm taller than 7 Neck Length).</td>
                     </tr>
                     <tr>
                         <td class="metric-name">Shoulder Width</td>
-                        <td>The main factor influencing Torso Collision after Height. Enhances shielding ability and slightly boosts Arm Coverage.</td>
+                        <td data-label="Gameplay Effect">The main factor influencing Torso Collision after Height. Enhances shielding ability and slightly boosts Arm Coverage.</td>
                     </tr>
                     <tr>
                         <td class="metric-name">Arm Length</td>
-                        <td>Directly increases Arm Coverage.</td>
+                        <td data-label="Gameplay Effect">Directly increases Arm Coverage.</td>
                     </tr>
                     <tr>
                         <td class="metric-name">Chest / Waist / Thigh Size</td>
-                        <td>Slightly increases Torso Collision.</td>
+                        <td data-label="Gameplay Effect">Slightly increases Torso Collision.</td>
                     </tr>
                     <tr>
                         <td class="metric-name">Leg Length</td>
-                        <td>Determines leg-to-body proportions and directly increases Leg Coverage.</td>
+                        <td data-label="Gameplay Effect">Determines leg-to-body proportions and directly increases Leg Coverage.</td>
                     </tr>
                     <tr>
                         <td class="metric-name visual-only">Neck Size / Shoulder Height / Calf Size / Arm Size</td>
-                        <td class="visual-only">Purely visual aesthetics with no impact on gameplay.</td>
+                        <td class="visual-only" data-label="Gameplay Effect">Purely visual aesthetics with no impact on gameplay.</td>
                     </tr>
                 </tbody>
             </table>

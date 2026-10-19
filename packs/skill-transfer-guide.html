@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Transfer Guide | eFootball Wiki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #131822;
+            --card-border: rgba(0, 229, 255, 0.15);
+            --primary-neon: #00e5ff;
+            --secondary-neon: #7000ff;
+            --accent-gold: #ffb700;
+            --accent-green: #00ff88;
+            --accent-red: #ff3366;
+            --text-main: #f0f4f8;
+            --text-muted: #8a99ad;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(112, 0, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 40%);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .top-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 10px; color: var(--primary-neon);
+            text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 10px 20px;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateX(-3px); }
+
+        .home-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+            color: var(--primary-neon); text-decoration: none; font-size: 1.1rem;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .home-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateY(-2px); }
+
+        .hero {
+            text-align: center; padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(19, 24, 34, 0.9), rgba(11, 14, 20, 0.95));
+            border: 1px solid var(--card-border); border-radius: 20px;
+            margin-bottom: 40px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 2px;
+            text-transform: uppercase; background: linear-gradient(90deg, #ffffff, var(--primary-neon));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px;
+        }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+
+        .badge {
+            display: inline-block; padding: 6px 16px; background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--primary-neon); border-radius: 50px; color: var(--primary-neon);
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px;
+        }
+
+        .section-header { display: flex; align-items: center; gap: 12px; margin: 40px 0 20px 0; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
+        .section-header i { font-size: 1.5rem; color: var(--primary-neon); }
+        .section-header h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Table Card Container */
+        .table-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .table-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-neon);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .data-table th {
+            background-color: rgba(0, 229, 255, 0.05);
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(0, 229, 255, 0.03);
+        }
+
+        .param-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--primary-neon);
+            white-space: nowrap;
+        }
+
+        .metric-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+
+        .visual-only {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 10px; }
+            .back-btn { padding: 10px 14px; font-size: 0.85rem; }
+            .hero { padding: 35px 15px; margin-bottom: 25px; }
+            .hero h1 { font-size: 1.9rem; letter-spacing: 1px; }
+            .hero p { font-size: 1rem; }
+            .section-header h2 { font-size: 1.2rem; }
+            .table-card { padding: 18px; }
+            .table-card h3 { font-size: 1.1rem; }
+
+            /* Tables become stacked rows */
+            .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
+            .data-table thead { display: none; }
+            .data-table tr { padding: 14px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+            .data-table tr:last-child { border-bottom: none; }
+            .data-table td { padding: 4px 0; border-bottom: none; }
+            .param-name, .metric-name { white-space: normal; font-size: 1rem; }
+            .data-table td[data-label]::before {
+                content: attr(data-label);
+                display: block; margin-bottom: 2px;
+                font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 700;
+                letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted);
+            }
+        }
+    
+        /* Step cards */
+        .steps-list { display: flex; flex-direction: column; gap: 25px; }
+        .step-card { background-color: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 30px; transition: all 0.3s ease; }
+        .step-card:hover { border-color: var(--primary-neon); box-shadow: 0 8px 25px rgba(0, 229, 255, 0.12); transform: translateY(-2px); }
+        .step-top { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .step-num {
+            flex-shrink: 0; width: 46px; height: 46px; display: flex; align-items: center; justify-content: center;
+            font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--primary-neon);
+            background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 12px;
+        }
+        .step-top h3 { font-family: 'Orbitron', sans-serif; font-size: 1.3rem; color: #ffffff; }
+        .step-card ul { padding-left: 22px; margin-bottom: 18px; color: var(--text-muted); line-height: 1.7; }
+        .step-result {
+            display: flex; align-items: flex-start; gap: 12px; padding: 12px 18px; border-radius: 10px; font-size: 0.92rem; line-height: 1.6;
+            background: rgba(0, 255, 136, 0.08); border: 1px solid rgba(0, 255, 136, 0.3); color: var(--accent-green);
+        }
+        .step-result i { margin-top: 4px; }
+
+        /* Cost table */
+        .tag { display: inline-block; margin-left: 6px; padding: 2px 10px; border-radius: 50px; font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; vertical-align: middle; }
+        .tag.bad { color: var(--accent-red); border: 1px solid rgba(255, 51, 102, 0.4); background: rgba(255, 51, 102, 0.08); }
+        .tag.good { color: var(--accent-green); border: 1px solid rgba(0, 255, 136, 0.4); background: rgba(0, 255, 136, 0.08); }
+        .cost { font-family: 'Orbitron', sans-serif; font-weight: 700; white-space: nowrap; }
+        .cost.bad { color: var(--accent-red); }
+        .cost.good { color: var(--accent-green); }
+
+        .savings-box {
+            margin-top: 20px; padding: 22px; text-align: center; border-radius: 14px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 229, 255, 0.08)); border: 1px solid var(--accent-green);
+        }
+        .savings-label { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+        .savings-value { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; margin-top: 6px; color: var(--accent-green); text-shadow: 0 0 16px rgba(0, 255, 136, 0.3); }
+
+        @media (max-width: 768px) {
+            .steps-list { gap: 16px; }
+            .step-card { padding: 20px; }
+            .step-top { gap: 12px; }
+            .step-num { width: 40px; height: 40px; font-size: 1rem; }
+            .step-top h3 { font-size: 1.05rem; }
+            .step-result { padding: 10px 14px; }
+            .savings-box { padding: 18px 12px; }
+            .savings-value { font-size: 1.3rem; }
+            .cost { white-space: normal; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="top-nav">
+            <a href="../packs.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Packs &amp; Probability</a>
+            <a href="../index.html" class="home-btn" title="Back to Home"><i class="fa-solid fa-house"></i></a>
+        </nav>
+
+        <header class="hero">
+            <span class="badge"><i class="fa-solid fa-right-left"></i> Section 2.1</span>
+            <h1>Skill Transfer Guide</h1>
+            <p>When you transfer extra skills to a player, transferring a skill from a free player (e.g., Lombardi) to the exact same player ID is significantly cheaper. By stacking all 5 desired skills onto a single Lombardi card first, you can save a substantial amount of GP.</p>
+        </header>
+
+        <div class="section-header">
+            <i class="fa-solid fa-list-ol"></i>
+            <h2>Step-by-Step Guide</h2>
+        </div>
+
+        <div class="steps-list">
+
+            <div class="step-card">
+                <div class="step-top">
+                    <div class="step-num">1</div>
+                    <h3>Roll the Skills Individually</h3>
+                </div>
+                <ul>
+                    <li>Sign 5 separate copies of Lombardi.</li>
+                    <li>Use one Skill Training Program on each copy until you get the 5 specific skills you want.</li>
+                </ul>
+                <div class="step-result">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span><strong>Result:</strong> You now have 5 different Lombardis, each carrying 1 distinct skill (you can keep them aside to build an archive of skills).</span>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-top">
+                    <div class="step-num">2</div>
+                    <h3>Stack the Skills onto One Card</h3>
+                </div>
+                <ul>
+                    <li>Take Lombardi #2 and transfer him to Lombardi #1.</li>
+                    <li>Take Lombardi #3 and transfer him to Lombardi #1.</li>
+                    <li>Repeat this for Lombardi #4 and Lombardi #5.</li>
+                </ul>
+                <div class="step-result">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span><strong>Result:</strong> You now have a single Lombardi (#1) holding all 5 accumulated skills.</span>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-top">
+                    <div class="step-num">3</div>
+                    <h3>The Final Transfer</h3>
+                </div>
+                <ul>
+                    <li>Perform one final transfer from Lombardi #1 (now carrying all 5 skills) directly to your target main squad player.</li>
+                </ul>
+                <div class="step-result">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span><strong>Result:</strong> Your main player receives all 5 skills at once.</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="section-header">
+            <i class="fa-solid fa-coins"></i>
+            <h2>Cost Breakdown</h2>
+        </div>
+
+        <div class="table-card">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Method</th>
+                        <th style="width: 50%;">Process</th>
+                        <th style="width: 25%;">Total Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="param-name">1-by-1 Method <span class="tag bad">Expensive</span></td>
+                        <td data-label="Process">Transferring 5 times individually from a Lombardi to your target player (~257k GP per transfer).</td>
+                        <td data-label="Total Cost" class="cost bad">1,285,000 GP</td>
+                    </tr>
+                    <tr>
+                        <td class="param-name">Stacking Method <span class="tag good">Cheap</span></td>
+                        <td data-label="Process">Stacking all 5 skills onto one Lombardi card first, then transferring to your target player once.</td>
+                        <td data-label="Total Cost" class="cost good">~879,000 GP</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="savings-box">
+                <div class="savings-label">Total Savings</div>
+                <div class="savings-value">~400,000 GP (~30% less)</div>
+            </div>
+        </div>
+
+        <footer>
+            <p>eFootball Wiki · Skill Transfer Guide</p>
+        </footer>
+    </div>
+
+</body>
+</html>

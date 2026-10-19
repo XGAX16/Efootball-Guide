@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packs &amp; Probability | eFootball Wiki</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #131822;
+            --card-border: rgba(0, 229, 255, 0.15);
+            --primary-neon: #00e5ff;
+            --secondary-neon: #7000ff;
+            --accent-green: #00ff88;
+            --text-main: #f0f4f8;
+            --text-muted: #8a99ad;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(112, 0, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-neon);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 10px 20px;
+            background: rgba(0, 229, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 229, 255, 0.15);
+            border-color: var(--primary-neon);
+            transform: translateX(-3px);
+        }
+
+        /* Hero Banner */
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(19, 24, 34, 0.9), rgba(11, 14, 20, 0.95));
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 229, 255, 0.05);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ffffff, var(--primary-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--primary-neon);
+            border-radius: 50px;
+            color: var(--primary-neon);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        /* Grid Section */
+        .sub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+            gap: 25px;
+        }
+
+        /* Sub-Category Card */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-neon);
+            box-shadow: 0 10px 25px rgba(0, 229, 255, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(112, 0, 255, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--primary-neon);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        .sub-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .card h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            color: #ffffff;
+            margin-top: 2px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-neon);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .card-footer i {
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-footer i {
+            transform: translateX(5px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 10px; }
+            .back-btn { padding: 10px 14px; font-size: 0.85rem; }
+            .hero { padding: 35px 15px; margin-bottom: 25px; }
+            .hero h1 { font-size: 1.8rem; letter-spacing: 1px; }
+            .hero p { font-size: 1rem; }
+            .sub-grid { gap: 16px; }
+            .card { padding: 22px; }
+            .card h2 { font-size: 1.1rem; }
+            footer { margin-top: 40px; }
+        }
+
+        @media (hover: none) {
+            .card:hover { transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Hub</a>
+        </nav>
+
+        <!-- Hero Header -->
+        <header class="hero">
+            <span class="badge"><i class="fa-solid fa-coins"></i> Category 02</span>
+            <h1>Packs &amp; Probability</h1>
+            <p>Pack odds, probability calculations, and free-to-play strategies for getting the most out of every pull.</p>
+        </header>
+
+        <!-- Sub-Categories Grid -->
+        <main class="sub-grid">
+
+            <a href="packs/skill-transfer-guide.html" class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="icon-box"><i class="fa-solid fa-right-left"></i></div>
+                        <div>
+                            <span class="sub-number">SECTION 2.1</span>
+                            <h2>Skill Transfer Guide</h2>
+                        </div>
+                    </div>
+                    <p>Step-by-step guide to transferring skills between players.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Open Module</span> <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <a href="packs/f2p-150-pack-strategy.html" class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="icon-box"><i class="fa-solid fa-boxes-stacked"></i></div>
+                        <div>
+                            <span class="sub-number">SECTION 2.2</span>
+                            <h2>F2P 150-Pack Strategy</h2>
+                        </div>
+                    </div>
+                    <p>Free-to-play strategy built around a 150-pack plan.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Open Module</span> <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <a href="packs/f2p-region.html" class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="icon-box"><i class="fa-solid fa-globe"></i></div>
+                        <div>
+                            <span class="sub-number">SECTION 2.3</span>
+                            <h2>F2P Region</h2>
+                        </div>
+                    </div>
+                    <p>Free-to-play information by region.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Open Module</span> <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <a href="packs/standard-pool-probability.html" class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="icon-box"><i class="fa-solid fa-chart-pie"></i></div>
+                        <div>
+                            <span class="sub-number">SECTION 2.4</span>
+                            <h2>Standard Pool Probability</h2>
+                        </div>
+                    </div>
+                    <p>Probabilities and odds for the standard pack pool.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Open Module</span> <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+        </main>
+
+        <footer>
+            <p>eFootball Wiki · Packs &amp; Probability Section</p>
+        </footer>
+    </div>
+
+</body>
+</html>

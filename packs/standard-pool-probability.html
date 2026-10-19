@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Pool Probability | eFootball Wiki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #131822;
+            --card-border: rgba(0, 229, 255, 0.15);
+            --primary-neon: #00e5ff;
+            --secondary-neon: #7000ff;
+            --accent-gold: #ffb700;
+            --arrow-top: #00ff88;
+            --arrow-up-right: #00e5ff;
+            --arrow-right: #8a99ad;
+            --arrow-down-right: #ff9900;
+            --arrow-down: #ff3366;
+            --text-main: #f0f4f8;
+            --text-muted: #8a99ad;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(112, 0, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 40%);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .top-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 10px; color: var(--primary-neon);
+            text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 10px 20px;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateX(-3px); }
+
+        .home-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+            color: var(--primary-neon); text-decoration: none; font-size: 1.1rem;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .home-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateY(-2px); }
+
+        .hero {
+            text-align: center; padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(19, 24, 34, 0.9), rgba(11, 14, 20, 0.95));
+            border: 1px solid var(--card-border); border-radius: 20px;
+            margin-bottom: 40px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 2px;
+            text-transform: uppercase; background: linear-gradient(90deg, #ffffff, var(--primary-neon));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px;
+        }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+
+        .badge {
+            display: inline-block; padding: 6px 16px; background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--primary-neon); border-radius: 50px; color: var(--primary-neon);
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px;
+        }
+
+        /* Section Title */
+        .section-header { display: flex; align-items: center; gap: 12px; margin: 40px 0 20px 0; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
+        .section-header i { font-size: 1.5rem; color: var(--primary-neon); }
+        .section-header h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Table Card Container */
+        .table-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .table-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-neon);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Styled Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+
+        .data-table th {
+            background-color: rgba(0, 229, 255, 0.05);
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .data-table tr:hover {
+            background-color: rgba(0, 229, 255, 0.03);
+        }
+
+        .form-label-td {
+            font-weight: 700;
+            color: #ffffff;
+            text-align: left;
+            padding-left: 20px !important;
+        }
+
+        .rating-badge {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        .rating-A { background: rgba(0, 255, 136, 0.15); color: var(--arrow-top); border: 1px solid var(--arrow-top); }
+        .rating-B { background: rgba(0, 229, 255, 0.15); color: var(--arrow-up-right); border: 1px solid var(--arrow-up-right); }
+        .rating-C { background: rgba(138, 153, 173, 0.15); color: var(--arrow-right); border: 1px solid var(--arrow-right); }
+        .rating-D { background: rgba(255, 153, 0, 0.15); color: var(--arrow-down-right); border: 1px solid var(--arrow-down-right); }
+        .rating-E { background: rgba(255, 51, 102, 0.15); color: var(--arrow-down); border: 1px solid var(--arrow-down); }
+
+        /* Arrow Icons in Table Headers */
+        .arr-top { color: var(--arrow-top); font-size: 1.1rem; }
+        .arr-up-right { color: var(--arrow-up-right); font-size: 1.1rem; }
+        .arr-right { color: var(--arrow-right); font-size: 1.1rem; }
+        .arr-down-right { color: var(--arrow-down-right); font-size: 1.1rem; }
+        .arr-down { color: var(--arrow-down); font-size: 1.1rem; }
+
+        .zero-val { color: rgba(255, 255, 255, 0.2); }
+        .high-val { font-weight: 700; color: #ffffff; }
+
+        /* Epic Special Callout */
+        .epic-card-box {
+            background: linear-gradient(135deg, rgba(112, 0, 255, 0.1), rgba(19, 24, 34, 0.95));
+            border: 1px solid rgba(112, 0, 255, 0.4);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 40px;
+        }
+
+        .epic-card-box h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #d1b3ff;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 10px; }
+            .back-btn { padding: 10px 14px; font-size: 0.85rem; }
+            .hero { padding: 35px 15px; margin-bottom: 25px; }
+            .hero h1 { font-size: 1.9rem; letter-spacing: 1px; }
+            .hero p { font-size: 1rem; }
+            .section-header h2 { font-size: 1.2rem; }
+            .table-card, .epic-card-box { padding: 16px; }
+            .epic-card-box { margin-top: 25px; }
+            .table-card h3, .epic-card-box h3 { font-size: 1.05rem; }
+            .data-table th, .data-table td { padding: 10px 3px; font-size: 0.8rem; }
+            .data-table th { font-size: 0.6rem; letter-spacing: 0; }
+            .data-table th i { display: block; margin-bottom: 3px; font-size: 0.95rem; }
+            .data-table th:first-child, .form-label-td { padding-left: 8px !important; }
+            .rating-badge { padding: 3px 8px; }
+            footer { margin-top: 40px; }
+        }
+
+        footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+    
+        /* Chart */
+        .readout { margin-bottom: 14px; padding: 10px 14px; border-radius: 10px; font-size: 0.95rem; color: var(--text-muted); background: rgba(0, 229, 255, 0.05); border-left: 3px solid var(--primary-neon); }
+        .readout b { font-family: 'Orbitron', sans-serif; color: var(--primary-neon); }
+        .axis-caption { font-size: 0.8rem; color: var(--text-muted); }
+        .axis-caption.x { text-align: center; margin-top: 6px; }
+        .axis-caption.y { margin-bottom: 8px; }
+        #chart { width: 100%; }
+        #chart svg { display: block; touch-action: pan-y; }
+        .grid-line { stroke: rgba(255, 255, 255, 0.1); stroke-width: 1; }
+        .axis-line { stroke: rgba(255, 255, 255, 0.35); stroke-width: 1; }
+        .tick-label { fill: #8a99ad; font-size: 11px; }
+        .curve { fill: none; stroke: #00e5ff; stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+        .hover-line { stroke: rgba(0, 229, 255, 0.5); stroke-width: 1; stroke-dasharray: 4 3; }
+        .hover-dot { fill: #0b0e14; stroke: #00e5ff; stroke-width: 2.5; }
+
+        /* Table */
+        .table-scroll { max-height: 480px; overflow-y: auto; border-radius: 10px; }
+        .prob-table { width: 100%; }
+        .prob-table th, .prob-table td { text-align: center; }
+        .prob-table thead th { position: sticky; top: 0; z-index: 1; background-color: #17202b; }
+        .prob-table td { font-family: 'Orbitron', sans-serif; font-weight: 700; }
+        .prob-table td.p { background: linear-gradient(90deg, rgba(0, 229, 255, 0.18) var(--p), transparent var(--p)); color: var(--primary-neon); }
+
+        @media (max-width: 768px) {
+            .readout { font-size: 0.88rem; }
+            .table-scroll { max-height: 400px; }
+            .prob-table th, .prob-table td { padding: 9px 6px; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="top-nav">
+            <a href="../packs.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Packs &amp; Probability</a>
+            <a href="../index.html" class="home-btn" title="Back to Home"><i class="fa-solid fa-house"></i></a>
+        </nav>
+
+        <header class="hero">
+            <span class="badge"><i class="fa-solid fa-chart-pie"></i> Section 2.4</span>
+            <h1>Standard Pool Probability</h1>
+            <p>Probability of pulling at least one special card from a standard pack with 3 Epic cards in a 150-card pool, based on the number of pulls.</p>
+        </header>
+
+        <div class="section-header">
+            <i class="fa-solid fa-chart-line"></i>
+            <h2>Probability Curve</h2>
+        </div>
+
+        <div class="table-card">
+            <div class="readout" id="readout">Hover or tap the chart to read the exact values.</div>
+            <div class="axis-caption y">Probability of pulling at least one special card</div>
+            <div id="chart"></div>
+            <div class="axis-caption x">Number of pulls</div>
+        </div>
+
+        <div class="section-header">
+            <i class="fa-solid fa-table-list"></i>
+            <h2>Probability Table</h2>
+        </div>
+
+        <div class="table-card">
+            <div class="table-scroll">
+                <table class="data-table prob-table">
+                    <thead><tr><th>Pulls</th><th>At least 1 special</th></tr></thead>
+                    <tbody id="rows"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            <p>eFootball Wiki · Standard Pool Probability</p>
+        </footer>
+    </div>
+
+<script>
+(function () {
+    // Pool: 150 cards, 3 special. P(at least 1 in n pulls) = 1 - prod((N-K-i)/(N-i)), no replacement
+    var N = 150, K = 3, MAXN = 147, data = [null], q = 1;
+    for (var n = 1; n <= MAXN; n++) { q *= (N - K - (n - 1)) / (N - (n - 1)); data.push(1 - q); }
+
+    var fmt = new Intl.NumberFormat(navigator.language, { minimumFractionDigits: 4, maximumFractionDigits: 4 });
+    var pct0 = new Intl.NumberFormat(navigator.language, { maximumFractionDigits: 0 });
+    var host = document.getElementById('chart'), readout = document.getElementById('readout');
+    var NS = 'http://www.w3.org/2000/svg';
+
+    // Table
+    var rows = '';
+    for (var i = 1; i <= MAXN; i++) {
+        rows += '<tr><td>' + i + '</td><td class="p" style="--p:' + (data[i] * 100).toFixed(4) + '%">' + fmt.format(data[i] * 100) + '%</td></tr>';
+    }
+    document.getElementById('rows').innerHTML = rows;
+
+    function draw() {
+        var w = host.clientWidth;
+        if (!w) return;
+        var h = Math.max(240, Math.min(420, Math.round(w * 0.55)));
+        var m = { l: 44, r: 12, t: 12, b: 26 }, iw = w - m.l - m.r, ih = h - m.t - m.b;
+        var X = function (n) { return m.l + (n - 1) / (MAXN - 1) * iw; };
+        var Y = function (p) { return m.t + (1 - p) * ih; };
+        var s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" xmlns="' + NS + '">';
+        s += '<defs><linearGradient id="fillg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:#00e5ff;stop-opacity:0.25"/><stop offset="1" style="stop-color:#00e5ff;stop-opacity:0"/></linearGradient></defs>';
+        [0, 0.25, 0.5, 0.75, 1].forEach(function (p) {
+            s += '<line class="' + (p === 0 ? 'axis-line' : 'grid-line') + '" x1="' + m.l + '" x2="' + (w - m.r) + '" y1="' + Y(p) + '" y2="' + Y(p) + '"/>';
+            s += '<text class="tick-label" x="' + (m.l - 8) + '" y="' + (Y(p) + 4) + '" text-anchor="end">' + pct0.format(p * 100) + '%</text>';
+        });
+        var step = w < 520 ? 30 : 10, ticks = [1];
+        for (var t = step; t <= MAXN; t += step) ticks.push(t);
+        ticks.forEach(function (t) {
+            s += '<text class="tick-label" x="' + X(t) + '" y="' + (h - 8) + '" text-anchor="middle">' + t + '</text>';
+        });
+        var d = '';
+        for (var k = 1; k <= MAXN; k++) d += (k === 1 ? 'M' : 'L') + X(k).toFixed(1) + ' ' + Y(data[k]).toFixed(1);
+        s += '<path d="' + d + ' L' + X(MAXN) + ' ' + Y(0) + ' L' + X(1) + ' ' + Y(0) + ' Z" fill="url(#fillg)"/>';
+        s += '<path class="curve" d="' + d + '"/>';
+        s += '<line id="vline" class="hover-line" y1="' + m.t + '" y2="' + Y(0) + '" visibility="hidden"/>';
+        s += '<circle id="dot" class="hover-dot" r="5" visibility="hidden"/>';
+        s += '<rect id="hit" x="' + m.l + '" y="' + m.t + '" width="' + iw + '" height="' + ih + '" fill="transparent"/>';
+        host.innerHTML = s + '</svg>';
+
+        var svg = host.firstChild, vline = svg.querySelector('#vline'), dot = svg.querySelector('#dot'), hit = svg.querySelector('#hit');
+        function show(e) {
+            var r = svg.getBoundingClientRect();
+            var n = Math.round(1 + (e.clientX - r.left - m.l) / iw * (MAXN - 1));
+            n = Math.max(1, Math.min(MAXN, n));
+            var x = X(n), y = Y(data[n]);
+            vline.setAttribute('x1', x); vline.setAttribute('x2', x);
+            dot.setAttribute('cx', x); dot.setAttribute('cy', y);
+            vline.setAttribute('visibility', 'visible'); dot.setAttribute('visibility', 'visible');
+            readout.innerHTML = '<b>' + n + '</b> ' + (n === 1 ? 'pull' : 'pulls') + ' → <b>' + fmt.format(data[n] * 100) + '%</b> chance of at least 1 special card';
+        }
+        hit.addEventListener('pointermove', show);
+        hit.addEventListener('pointerdown', show);
+        hit.addEventListener('pointerleave', function (e) {
+            if (e.pointerType === 'mouse') {
+                vline.setAttribute('visibility', 'hidden'); dot.setAttribute('visibility', 'hidden');
+                readout.textContent = 'Hover or tap the chart to read the exact values.';
+            }
+        });
+    }
+
+    draw();
+    window.addEventListener('resize', draw);
+})();
+</script>
+</body>
+</html>

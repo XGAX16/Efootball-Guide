@@ -104,7 +104,7 @@
         /* Grid Section - 2x2 Layout */
         .wiki-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
             gap: 25px;
         }
 
@@ -195,6 +195,23 @@
             color: var(--text-muted);
             font-size: 0.85rem;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 10px; }
+            .hero { padding: 35px 15px; margin-bottom: 25px; }
+            .hero h1 { font-size: 1.8rem; letter-spacing: 1px; }
+            .hero p { font-size: 1rem; }
+            .wiki-grid { gap: 16px; }
+            .card { padding: 22px; }
+            .card h2 { font-size: 1.15rem; }
+            footer { margin-top: 40px; }
+        }
+
+        @media (hover: none) {
+            .card:hover { transform: none; }
         }
     </style>
 </head>

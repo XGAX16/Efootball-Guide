@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Suggestions | eFootball Wiki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #131822;
+            --card-border: rgba(0, 229, 255, 0.15);
+            --primary-neon: #00e5ff;
+            --secondary-neon: #7000ff;
+            --accent-gold: #ffb700;
+            --accent-green: #00ff88;
+            --text-main: #f0f4f8;
+            --text-muted: #8a99ad;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(112, 0, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 40%);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .top-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 10px; color: var(--primary-neon);
+            text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 10px 20px;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateX(-3px); }
+
+        .home-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+            color: var(--primary-neon); text-decoration: none; font-size: 1.1rem;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .home-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateY(-2px); }
+
+        .hero {
+            text-align: center; padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(19, 24, 34, 0.9), rgba(11, 14, 20, 0.95));
+            border: 1px solid var(--card-border); border-radius: 20px;
+            margin-bottom: 40px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 2px;
+            text-transform: uppercase; background: linear-gradient(90deg, #ffffff, var(--primary-neon));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px;
+        }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+
+        .badge {
+            display: inline-block; padding: 6px 16px; background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--primary-neon); border-radius: 50px; color: var(--primary-neon);
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px;
+        }
+
+        .section-header { display: flex; align-items: center; gap: 12px; margin: 40px 0 20px 0; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
+        .section-header i { font-size: 1.5rem; color: var(--primary-neon); }
+        .section-header h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Table Card Container */
+        .table-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .table-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-neon);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Calculator */
+        .field-grid { display: grid; gap: 16px; margin-bottom: 16px; }
+        .field-grid.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .field-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .field label {
+            display: block; margin-bottom: 6px;
+            font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase; color: #ffffff;
+        }
+        .field input, .field select {
+            width: 100%; padding: 12px 14px; border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.04); border: 1px solid var(--card-border);
+            color: var(--text-main); font-size: 16px; outline: none; color-scheme: dark;
+            transition: border-color 0.3s ease;
+        }
+        .field input:focus, .field select:focus { border-color: var(--primary-neon); }
+        .field input::placeholder { color: var(--text-muted); }
+        .field input[type=number] { -moz-appearance: textfield; appearance: textfield; text-align: center; }
+        .field input[type=number]::-webkit-outer-spin-button, .field input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .field select {
+            -webkit-appearance: none; appearance: none; padding-right: 38px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2300e5ff' stroke-width='2'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 14px center;
+        }
+        .hint { margin-top: 6px; font-size: 0.8rem; color: var(--text-muted); }
+
+        .result-box {
+            margin-top: 10px; padding: 25px; text-align: center; border-radius: 16px;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(112, 0, 255, 0.12));
+            border: 1px solid var(--primary-neon);
+        }
+        .result-label { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+        .result-value {
+            font-family: 'Orbitron', sans-serif; font-size: 3.4rem; font-weight: 900; line-height: 1.2; margin: 6px 0 16px;
+            color: var(--primary-neon); text-shadow: 0 0 18px rgba(0, 229, 255, 0.35);
+        }
+        .breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; text-align: left; }
+        .breakdown div { padding: 10px 12px; border-radius: 10px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.95rem; font-weight: 700; }
+        .breakdown span { display: block; margin-bottom: 2px; font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+        .result-note { margin-top: 14px; font-size: 0.85rem; color: var(--accent-gold); min-height: 1.2em; }
+
+        .formula-line { padding: 14px 16px; border-radius: 10px; background: rgba(0, 229, 255, 0.05); border-left: 3px solid var(--primary-neon); line-height: 1.7; margin-bottom: 15px; }
+        .rules { padding-left: 22px; color: var(--text-muted); line-height: 1.7; }
+        .rules strong { color: #ffffff; }
+
+        footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+
+        /* Skill suggestions */
+        .legend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 12px; }
+        .legend-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 10px; font-size: 0.9rem; color: var(--text-muted); background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); }
+
+        .rate { display: inline-flex; align-items: center; justify-content: center; min-width: 54px; padding: 4px 10px; border-radius: 8px; border: 1px solid transparent; font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; }
+        .rate.M { color: #00ff88; background: rgba(0, 255, 136, 0.14); border-color: rgba(0, 255, 136, 0.45); }
+        .rate.Y { color: #ffb700; background: rgba(255, 183, 0, 0.14); border-color: rgba(255, 183, 0, 0.45); }
+        .rate.C { color: #ff8a3d; background: rgba(255, 138, 61, 0.14); border-color: rgba(255, 138, 61, 0.45); }
+        .rate.N { color: #ff3366; background: rgba(255, 51, 102, 0.14); border-color: rgba(255, 51, 102, 0.45); }
+        .rate.B { color: var(--text-muted); background: transparent; border: 1px dashed rgba(138, 153, 173, 0.5); }
+
+        .select-field { max-width: 360px; margin-bottom: 24px; }
+        .matrix-sub { margin: -8px 0 14px; font-size: 0.85rem; color: var(--text-muted); }
+        .scroll-hint { display: none; margin-bottom: 8px; font-size: 0.8rem; color: var(--text-muted); }
+        .scroll-hint i { color: var(--primary-neon); margin-right: 6px; }
+
+        .table-scroll { overflow-x: auto; border-radius: 10px; }
+        .matrix { width: 100%; border-collapse: separate; border-spacing: 0; }
+        .matrix th, .matrix td { padding: 10px 6px; text-align: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .matrix th:not(:first-child), .matrix td:not(:first-child) { min-width: 66px; }
+        .matrix th { background-color: #17202b; color: #ffffff; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
+        .matrix th:first-child, .matrix td:first-child { position: sticky; left: 0; z-index: 1; min-width: 150px; padding-left: 14px; text-align: left; white-space: nowrap; }
+        .matrix td:first-child { background-color: var(--card-bg); font-weight: 600; }
+        .matrix tbody tr:hover td { background-color: #151b27; }
+
+        footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 10px; }
+            .back-btn { padding: 10px 14px; font-size: 0.85rem; }
+            .hero { padding: 35px 15px; margin-bottom: 25px; }
+            .hero h1 { font-size: 1.9rem; letter-spacing: 1px; }
+            .hero p { font-size: 1rem; }
+            .section-header h2 { font-size: 1.2rem; }
+            .table-card { padding: 18px; }
+            .table-card h3 { font-size: 1.1rem; }
+            .select-field { max-width: none; }
+            .scroll-hint.show { display: block; }
+            .matrix th:first-child, .matrix td:first-child { min-width: 118px; padding-left: 10px; font-size: 0.85rem; }
+            .matrix th:not(:first-child), .matrix td:not(:first-child) { min-width: 58px; }
+            .rate { min-width: 46px; padding: 3px 6px; font-size: 0.62rem; }
+            footer { margin-top: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="top-nav">
+            <a href="../game-mechanics.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Game Mechanics</a>
+            <a href="../index.html" class="home-btn" title="Back to Home"><i class="fa-solid fa-house"></i></a>
+        </nav>
+
+        <header class="hero">
+            <span class="badge"><i class="fa-solid fa-lightbulb"></i> Section 1.6</span>
+            <h1>Skill Suggestions</h1>
+            <p>Skill tips guide: pick a skill class to see how each skill is rated for every position.</p>
+        </header>
+
+        <div class="section-header">
+            <i class="fa-solid fa-palette"></i>
+            <h2>Ratings Legend</h2>
+        </div>
+
+        <div class="table-card">
+            <div class="legend-grid"><div class="legend-item"><span class="rate M">MUST</span><span>Highly recommended</span></div><div class="legend-item"><span class="rate Y">YES</span><span>Very helpful</span></div><div class="legend-item"><span class="rate C">CAN</span><span>Situational</span></div><div class="legend-item"><span class="rate N">NO</span><span>Not recommended</span></div><div class="legend-item"><span class="rate B">BLANK</span><span>Your choice</span></div></div>
+        </div>
+
+        <div class="section-header">
+            <i class="fa-solid fa-table-cells"></i>
+            <h2>Skill Ratings</h2>
+        </div>
+
+        <div class="table-card">
+            <div class="field select-field">
+                <label for="skillClass">Skill Class</label>
+                <select id="skillClass"><option value="dribbling">Dribbling</option><option value="shooting">Shooting</option><option value="passing">Passing</option><option value="defending">Defending</option><option value="goalkeeping">Goalkeeping</option><option value="mentality">Mentality</option><option value="avoid">Skills to Avoid</option></select>
+            </div>
+            <h3 id="matrixTitle"></h3>
+            <p class="matrix-sub" id="matrixSub"></p>
+            <p class="scroll-hint" id="scrollHint"><i class="fa-solid fa-arrows-left-right"></i>Swipe sideways to see all positions</p>
+            <div class="table-scroll">
+                <table class="matrix">
+                    <thead id="mHead"></thead>
+                    <tbody id="mBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            <p>eFootball Wiki · Skill Suggestions</p>
+        </footer>
+    </div>
+
+<script>
+(function () {
+    // Codes per position: M = MUST, Y = YES, C = CAN, N = NO, . = blank (your choice)
+    var CATS = [{"id": "dribbling", "label": "Dribbling", "icon": "fa-person-running", "sub": "Skill suggestions", "cols": ["CF", "SS", "L/RWF", "AMF", "CMF", "L/RMF", "DMF", "L/RB", "CB", "GK"], "rows": [["Double Touch", "MMMMYYCC.."], ["Scissors Feint", ".........."], ["Flip Flap", ".........."], ["Marseille Turn", "YYMMCY...."], ["Chop Turn", ".........."], ["Cut Behind & Turn", "YYCC......"], ["Sole Control", "CCCC......"]]}, {"id": "shooting", "label": "Shooting", "icon": "fa-bullseye", "sub": "Skill suggestions", "cols": ["CF", "SS", "L/RWF", "AMF", "CMF", "L/RMF", "DMF", "L/RB", "CB", "GK"], "rows": [["Heading", "Y.....YCM."], ["Long-Range Curler", "MMMMCY...."], ["Chip Shot Control", "YCC......."], ["Knuckle Shot", "CCCC......"], ["Dipping Shot", "MYYC......"], ["Long-Range Shooting", "MMMMYY...."], ["Acrobatic Finishing", "YYCC......"], ["Heel Trick", "CC.YYC...."], ["First-time Shot", "MMYY......"]]}, {"id": "passing", "label": "Passing", "icon": "fa-share-nodes", "sub": "Skill suggestions", "cols": ["CF", "SS", "L/RWF", "AMF", "CMF", "L/RMF", "DMF", "L/RB", "CB", "GK"], "rows": [["One-touch Pass", "MMMMMMMYYC"], ["Through Passing", "MMMMMMMYYC"], ["Weighted Pass", "...CY.YYYC"], ["Pinpoint Crossing", "..MYYM.MC."], ["Outside Curler", "MY.YYYCCCC"], ["Low Lofted Pass", "...CY.YCYC"]]}, {"id": "defending", "label": "Defending", "icon": "fa-shield-halved", "sub": "Skill suggestions", "cols": ["CF", "SS", "L/RWF", "AMF", "CMF", "L/RMF", "DMF", "L/RB", "CB", "GK"], "rows": [["Man Marking", "....YCMMM."], ["Track Back", "...CC.NNN."], ["Interception", "....YCMMM."], ["Blocker", "....YCMMM."], ["Aerial Superiority", "Y.....MYM."], ["Sliding Tackle", "....YCYMM."], ["Acrobatic Clearance", "......YMM."]]}, {"id": "goalkeeping", "label": "Goalkeeping", "icon": "fa-hand", "sub": "Goalkeeper tips", "cols": ["GK"], "rows": [["GK Low Punt", "M"], ["GK High Punt", "M"], ["GK Long Throw", "M"], ["GK Penalty Saver", "M"]]}, {"id": "mentality", "label": "Mentality", "icon": "fa-brain", "sub": "Skill suggestions", "cols": ["CF", "SS", "L/RWF", "AMF", "CMF", "L/RMF", "DMF", "L/RB", "CB", "GK"], "rows": [["Super-sub", ".........."], ["Fighting Spirit", "MMMMMMMMMC"], ["Gamesmanship", "CCCC......"]]}, {"id": "avoid", "label": "Skills to Avoid", "icon": "fa-ban", "sub": "Not worth adding", "cols": ["Rating"], "rows": [["Sombrero", "N"], ["Scotch Move", "N"], ["Rising Shot", "N"], ["Rabona", "N"], ["No Look Pass", "N"], ["Long Throw", "N"], ["Penalty Specialist", "N"], ["Captaincy", "N"]]}];
+    var LABEL = { M: 'MUST', Y: 'YES', C: 'CAN', N: 'NO' };
+    var $ = function (id) { return document.getElementById(id); };
+    var esc = function (s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+
+    function render(id) {
+        var cat = CATS.filter(function (c) { return c.id === id; })[0];
+        $('matrixTitle').innerHTML = '<i class="fa-solid ' + cat.icon + '"></i> ' + esc(cat.label);
+        $('matrixSub').textContent = cat.sub;
+        $('scrollHint').className = 'scroll-hint' + (cat.cols.length > 4 ? ' show' : '');
+        $('mHead').innerHTML = '<tr><th>Skill Name</th>' + cat.cols.map(function (c) { return '<th>' + esc(c) + '</th>'; }).join('') + '</tr>';
+        $('mBody').innerHTML = cat.rows.map(function (r) {
+            var cells = r[1].split('').map(function (ch) {
+                return ch === '.' ? '<td></td>' : '<td><span class="rate ' + ch + '">' + LABEL[ch] + '</span></td>';
+            }).join('');
+            return '<tr><td>' + esc(r[0]) + '</td>' + cells + '</tr>';
+        }).join('');
+    }
+
+    $('skillClass').addEventListener('change', function () { render(this.value); });
+    render($('skillClass').value);
+})();
+</script>
+</body>
+</html>

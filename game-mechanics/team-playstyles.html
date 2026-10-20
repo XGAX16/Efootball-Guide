@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Playstyles | eFootball Wiki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #131822;
+            --card-border: rgba(0, 229, 255, 0.15);
+            --primary-neon: #00e5ff;
+            --secondary-neon: #7000ff;
+            --accent-gold: #ffb700;
+            --accent-green: #00ff88;
+            --text-main: #f0f4f8;
+            --text-muted: #8a99ad;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(112, 0, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 40%);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .top-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 10px; color: var(--primary-neon);
+            text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 10px 20px;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateX(-3px); }
+
+        .home-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+            color: var(--primary-neon); text-decoration: none; font-size: 1.1rem;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .home-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateY(-2px); }
+
+        .hero {
+            text-align: center; padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(19, 24, 34, 0.9), rgba(11, 14, 20, 0.95));
+            border: 1px solid var(--card-border); border-radius: 20px;
+            margin-bottom: 40px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 2px;
+            text-transform: uppercase; background: linear-gradient(90deg, #ffffff, var(--primary-neon));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px;
+        }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+
+        .badge {
+            display: inline-block; padding: 6px 16px; background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--primary-neon); border-radius: 50px; color: var(--primary-neon);
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px;
+        }
+
+        .section-header { display: flex; align-items: center; gap: 12px; margin: 40px 0 20px 0; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
+        .section-header i { font-size: 1.5rem; color: var(--primary-neon); }
+        .section-header h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Table Card Container */
+        .table-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .table-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-neon);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        :root { --offensive: #ff4d5e; --defensive: #7cc8ff; }
+
+        /* Phase colors: Attacking = red, Defending = light blue, Transition = green */
+        .attacking  { --c: var(--offensive);   --cb: rgba(255, 77, 94, 0.45);   --cg: rgba(255, 77, 94, 0.1); }
+        .defending  { --c: var(--defensive);   --cb: rgba(124, 200, 255, 0.45); --cg: rgba(124, 200, 255, 0.1); }
+        .transition { --c: var(--accent-green); --cb: rgba(0, 255, 136, 0.45);  --cg: rgba(0, 255, 136, 0.1); }
+
+        .phase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+        .phase-card { display: flex; align-items: flex-start; gap: 14px; padding: 18px 20px; border-radius: 14px; background-color: var(--card-bg); border: 1px solid var(--cb); }
+        .phase-card > i {
+            flex-shrink: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 10px;
+            font-size: 1.1rem; color: var(--c); background: var(--cg); border: 1px solid var(--cb);
+        }
+        .phase-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: var(--c); margin-bottom: 4px; }
+        .phase-card p { font-size: 0.9rem; line-height: 1.5; color: var(--text-muted); }
+
+        .ps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr)); gap: 25px; }
+        .ps-card { display: flex; flex-direction: column; gap: 16px; padding: 28px; border-radius: 16px; background-color: var(--card-bg); border: 1px solid var(--card-border); transition: all 0.3s ease; }
+        .ps-card:hover { transform: translateY(-3px); border-color: var(--primary-neon); box-shadow: 0 8px 24px rgba(0, 229, 255, 0.12); }
+        .ps-name { font-family: 'Orbitron', sans-serif; font-size: 1.25rem; color: var(--primary-neon); }
+
+        .label { display: block; margin-bottom: 4px; font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .best { padding: 12px 16px; border-radius: 10px; font-size: 0.92rem; line-height: 1.6; background: rgba(0, 229, 255, 0.05); border-left: 3px solid var(--primary-neon); }
+        .best .label { color: var(--primary-neon); }
+
+        .phase { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.92rem; line-height: 1.6; }
+        .phase .tag {
+            align-self: start; justify-self: start; padding: 3px 12px; border-radius: 50px;
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            color: var(--c); border: 1px solid var(--cb); background: var(--cg);
+        }
+        .placeholder { font-style: italic; color: var(--text-muted); }
+
+        footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 10px; }
+            .back-btn { padding: 10px 14px; font-size: 0.85rem; }
+            .hero { padding: 35px 15px; margin-bottom: 25px; }
+            .hero h1 { font-size: 1.9rem; letter-spacing: 1px; }
+            .hero p { font-size: 1rem; }
+            .section-header h2 { font-size: 1.2rem; }
+            .ps-grid { gap: 16px; }
+            .ps-card { padding: 20px; }
+            .ps-name { font-size: 1.1rem; }
+            .phase { grid-template-columns: 1fr; gap: 6px; }
+            footer { margin-top: 40px; }
+        }
+
+        @media (hover: none) {
+            .ps-card:hover { transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="top-nav">
+            <a href="../game-mechanics.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Game Mechanics</a>
+            <a href="../index.html" class="home-btn" title="Back to Home"><i class="fa-solid fa-house"></i></a>
+        </nav>
+
+        <header class="hero">
+            <span class="badge"><i class="fa-solid fa-people-group"></i> Section 1.8</span>
+            <h1>Team Playstyles</h1>
+            <p>Each Play Style dictates how your AI-controlled players move during three key phases of a match.</p>
+        </header>
+
+        <div class="section-header">
+            <i class="fa-solid fa-clock"></i>
+            <h2>Match Phases</h2>
+        </div>
+
+        <div class="phase-grid"><div class="phase-card attacking"><i class="fa-solid fa-futbol"></i><div><h3>Attacking Phase</h3><p>When you have possession of the ball.</p></div></div><div class="phase-card defending"><i class="fa-solid fa-shield-halved"></i><div><h3>Defending Phase</h3><p>When the opponent has the ball.</p></div></div><div class="phase-card transition"><i class="fa-solid fa-right-left"></i><div><h3>Transition Phase</h3><p>Right after you lose or regain possession.</p></div></div></div>
+
+        <div class="section-header">
+            <i class="fa-solid fa-chess-board"></i>
+            <h2>Play Style Details</h2>
+        </div>
+
+        <div class="ps-grid">
+            <div class="ps-card">
+                <h3 class="ps-name">Possession Game</h3>
+                <div class="best"><span class="label">Best For</span>Patient build-up play, short passing, and controlling tempo.</div>
+                <div class="phase attacking"><span class="tag">Attacking</span><span>Teammates move closer to the ball carrier for safe, short options; rare aggressive runs into open space.</span></div>
+                <div class="phase defending"><span class="tag">Defending</span><span>Maintains a high defensive line to squeeze opposition in their half with high pressure.</span></div>
+                <div class="phase transition"><span class="tag">Transition</span><span>Keeps compact shape, offering nearby passing options to prevent re-tackles.</span></div>
+            </div>
+            <div class="ps-card">
+                <h3 class="ps-name">Quick Counter</h3>
+                <div class="best"><span class="label">Best For</span>Fast, aggressive attacks and high-pressing defense.</div>
+                <div class="phase attacking"><span class="tag">Attacking</span><span>Frontlines immediately burst into space for rapid scoring opportunities, prioritizing speed.</span></div>
+                <div class="phase defending"><span class="tag">Defending</span><span>Aggressive high defensive line; players press high up the pitch to force errors near opponent's box.</span></div>
+                <div class="phase transition"><span class="tag">Transition</span><span>Forward runners sprint into space immediately before opponent reorganizes.</span></div>
+            </div>
+            <div class="ps-card">
+                <h3 class="ps-name">Long Ball Counter</h3>
+                <div class="best"><span class="label">Best For</span>Solid defense, low-block stability, and direct counter-attacks.</div>
+                <div class="phase attacking"><span class="tag">Attacking</span><span>Attackers spread out and make runs behind defense while midfield/defense sends direct long balls forward.</span></div>
+                <div class="phase defending"><span class="tag">Defending</span><span>Drops into a deep, compact low block near own box to absorb pressure.</span></div>
+                <div class="phase transition"><span class="tag">Transition</span><span>Attackers instantly sprint into open space left behind by attacking opponent.</span></div>
+            </div>
+            <div class="ps-card">
+                <h3 class="ps-name">Out Wide</h3>
+                <div class="best"><span class="label">Best For</span>Wingers, wide midfielders, and crossing into the box for tall strikers.</div>
+                <div class="phase attacking"><span class="tag">Attacking</span><span>Overloads flanks to stretch defense; central players/midfielders crash the box for crosses.</span></div>
+                <div class="phase defending"><span class="tag">Defending</span><span>Forms a solid mid-block in center pitch to funnel play or regain ball in midfield.</span></div>
+                <div class="phase transition"><span class="tag">Transition</span><span>Teammates push outward toward sidelines immediately to stretch pitch.</span></div>
+            </div>
+            <div class="ps-card">
+                <h3 class="ps-name">Long Ball</h3>
+                <div class="best"><span class="label">Best For</span>Using a tall, strong Target Man to hold up play and lay off to midfielders.</div>
+                <div class="phase attacking"><span class="tag">Attacking</span><span>Defenders hit direct long balls toward a designated Target Man; midfielders collect second balls.</span></div>
+                <div class="phase defending"><span class="tag">Defending</span><span>Defensive line sits deep to form a protective block and soak up pressure.</span></div>
+                <div class="phase transition"><span class="tag">Transition</span><span>Defenders fall back; strikers hold ground as targets while wide midfielders tuck inside centrally.</span></div>
+            </div>
+            <div class="ps-card">
+                <h3 class="ps-name">Overload</h3>
+                <div class="best"><span class="label">Best For</span><span class="placeholder">Placeholder</span></div>
+                <div class="phase attacking"><span class="tag">Attacking</span><span><span class="placeholder">Placeholder</span></span></div>
+                <div class="phase defending"><span class="tag">Defending</span><span><span class="placeholder">Placeholder</span></span></div>
+                <div class="phase transition"><span class="tag">Transition</span><span><span class="placeholder">Placeholder</span></span></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>eFootball Wiki · Team Playstyles</p>
+        </footer>
+    </div>
+
+</body>
+</html>

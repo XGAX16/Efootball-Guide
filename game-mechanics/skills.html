@@ -240,8 +240,16 @@
         <p>Full Reference Guide</p>
         <div class="stats-bar">
             <span>Standard: 44</span>
-            <span>Show Time: 22</span>
+            <span>Show Time: 23</span>
             <span>Unreleased: 5</span>
+        </div>
+        <div class="stats-bar" style="margin-top: 8px;">
+            <span>Dribbling: 16</span>
+            <span>Passing: 15</span>
+            <span>Shooting: 16</span>
+            <span>Defending: 11</span>
+            <span>Goalkeeping: 8</span>
+            <span>Mentality: 6</span>
         </div>
     </header>
 
@@ -260,6 +268,11 @@
             <li><strong>In-game description:</strong> The official text shown within the game.</li>
             <li><strong>Real effect:</strong> The quantified effect and the technical explanation derived from the game engine.</li>
             <li><strong>Activation condition:</strong> The exact conditions under which the ability activates on the field.</li>
+            <li><strong>Layers:</strong> 
+                Layer 1 = in-match attribute boost, capped at a maximum of 99. 
+                Layer 2 = actual local ability, with no limits (can exceed 99). 
+                Layer 3 = kinematic/physical parameters (the 99 threshold does not apply).
+            </li>
             <li><strong>Areas of the field:</strong> The 18-meter lines are measured from the halfway line across the entire width (not from the penalty area lines); the zones are mirrored when the teams switch ends.</li>
         </ul>
         <p class="reliability-warning"><strong>Reliability note:</strong> The numbers come directly from the guide (obtained via reverse engineering of the game engine). Data regarding animation-related ability stats (e.g., a 0.20s latency) and "unreleased" abilities are not confirmed.</p>
@@ -268,7 +281,7 @@
     <!-- SHOOTING SKILLS -->
     <div class="section-header category-title">
         <i class="fa-solid fa-bullseye"></i>
-        <h2>Shooting Skills - 15</h2>
+        <h2>Shooting Skills - 16</h2>
     </div>
     <div class="skills-grid">
         <!-- Heading -->
@@ -450,6 +463,19 @@
                 <div class="skill-section real-effect"><span class="label">Real Effect</span>-35% Wind-up Time / +6 Shot Power. Reduces stunning shot wind-up animation time by 35% and injects +6 to Kicking Power, releasing the shot abruptly before defenders can block.</div>
             </div>
             <div class="skill-section activation"><span class="label">Activation Condition</span>Stunning shot on the run or from medium range (> 20m)</div>
+        </div>
+
+        <!-- Willpower -->
+        <div class="skill-card">
+            <div>
+                <div class="skill-header">
+                    <h3 class="skill-name">Willpower</h3>
+                    <span class="badge show-time">Show Time</span>
+                </div>
+                <div class="skill-section ingame-desc">Improves player's shooting abilities whenever they take a shot, up to a maximum of 8 times.</div>
+                <div class="skill-section real-effect"><span class="label">Real Effect</span>+2 Finishing &amp; Kicking Power per Shot Attempt (Max 8× Stacks / +16 Cap). Progressively boosts Finishing and Kicking Power (+2 per shot attempt up to 8 stacks / +16 max cap) on normal shots, stunning shots, and penalty kicks during match.</div>
+            </div>
+            <div class="skill-section activation"><span class="label">Activation Condition</span>Shot attempt taken by player (triggers on each shot, capped at 8 shots)</div>
         </div>
     </div>
 

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Recommender | eFootball Wiki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #131822;
+            --card-border: rgba(0, 229, 255, 0.15);
+            --primary-neon: #00e5ff;
+            --secondary-neon: #7000ff;
+            --accent-gold: #ffb700;
+            --accent-green: #00ff88;
+            --text-main: #f0f4f8;
+            --text-muted: #8a99ad;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(112, 0, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.12) 0%, transparent 40%);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        .top-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 10px; color: var(--primary-neon);
+            text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 10px 20px;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateX(-3px); }
+
+        .home-btn {
+            display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
+            color: var(--primary-neon); text-decoration: none; font-size: 1.1rem;
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--card-border); border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .home-btn:hover { background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); transform: translateY(-2px); }
+
+        .hero {
+            text-align: center; padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(19, 24, 34, 0.9), rgba(11, 14, 20, 0.95));
+            border: 1px solid var(--card-border); border-radius: 20px;
+            margin-bottom: 40px; position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary-neon), transparent);
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: 2px;
+            text-transform: uppercase; background: linear-gradient(90deg, #ffffff, var(--primary-neon));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px;
+        }
+        .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+
+        .badge {
+            display: inline-block; padding: 6px 16px; background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--primary-neon); border-radius: 50px; color: var(--primary-neon);
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px;
+        }
+
+        .section-header { display: flex; align-items: center; gap: 12px; margin: 40px 0 20px 0; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
+        .section-header i { font-size: 1.5rem; color: var(--primary-neon); }
+        .section-header h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Table Card Container */
+        .table-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .table-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-neon);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Calculator */
+        .field-grid { display: grid; gap: 16px; margin-bottom: 16px; }
+        .field-grid.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .field-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .field label {
+            display: block; margin-bottom: 6px;
+            font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase; color: #ffffff;
+        }
+        .field input, .field select {
+            width: 100%; padding: 12px 14px; border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.04); border: 1px solid var(--card-border);
+            color: var(--text-main); font-size: 16px; outline: none; color-scheme: dark;
+            transition: border-color 0.3s ease;
+        }
+        .field input:focus, .field select:focus { border-color: var(--primary-neon); }
+        .field input::placeholder { color: var(--text-muted); }
+        .field input[type=number] { -moz-appearance: textfield; appearance: textfield; text-align: center; }
+        .field input[type=number]::-webkit-outer-spin-button, .field input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .field select {
+            -webkit-appearance: none; appearance: none; padding-right: 38px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2300e5ff' stroke-width='2'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 14px center;
+        }
+        .hint { margin-top: 6px; font-size: 0.8rem; color: var(--text-muted); }
+
+        .result-box {
+            margin-top: 10px; padding: 25px; text-align: center; border-radius: 16px;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(112, 0, 255, 0.12));
+            border: 1px solid var(--primary-neon);
+        }
+        .result-label { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+        .result-value {
+            font-family: 'Orbitron', sans-serif; font-size: 3.4rem; font-weight: 900; line-height: 1.2; margin: 6px 0 16px;
+            color: var(--primary-neon); text-shadow: 0 0 18px rgba(0, 229, 255, 0.35);
+        }
+        .breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; text-align: left; }
+        .breakdown div { padding: 10px 12px; border-radius: 10px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.95rem; font-weight: 700; }
+        .breakdown span { display: block; margin-bottom: 2px; font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+        .result-note { margin-top: 14px; font-size: 0.85rem; color: var(--accent-gold); min-height: 1.2em; }
+
+        .formula-line { padding: 14px 16px; border-radius: 10px; background: rgba(0, 229, 255, 0.05); border-left: 3px solid var(--primary-neon); line-height: 1.7; margin-bottom: 15px; }
+        .rules { padding-left: 22px; color: var(--text-muted); line-height: 1.7; }
+        .rules strong { color: #ffffff; }
+
+        footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+
+        /* Skill recommender */
+        .rate { display: inline-flex; align-items: center; justify-content: center; min-width: 54px; padding: 4px 10px; border-radius: 8px; border: 1px solid transparent; font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; }
+        .rate.M { color: #00ff88; background: rgba(0, 255, 136, 0.14); border-color: rgba(0, 255, 136, 0.45); }
+        .rate.Y { color: #ffb700; background: rgba(255, 183, 0, 0.14); border-color: rgba(255, 183, 0, 0.45); }
+        .rate.C { color: #ff8a3d; background: rgba(255, 138, 61, 0.14); border-color: rgba(255, 138, 61, 0.45); }
+
+        .select-field { max-width: 420px; }
+        .hint-text { font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 16px; }
+        .chips-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 14px; font-size: 0.85rem; color: var(--text-muted); }
+        .chips-bar b { font-family: 'Orbitron', sans-serif; color: var(--primary-neon); }
+        .link-btn { background: none; border: 1px solid var(--card-border); border-radius: 50px; padding: 6px 14px; color: var(--primary-neon); font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+        .link-btn:hover { background: rgba(0, 229, 255, 0.1); }
+        .group-title { margin: 18px 0 10px; font-family: 'Orbitron', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+        .group-title:first-child { margin-top: 0; }
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+        .chip { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 8px 14px; border-radius: 50px; border: 1px solid var(--card-border); background: rgba(255, 255, 255, 0.03); color: var(--text-main); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; -webkit-tap-highlight-color: transparent; }
+        .chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .chip.M .dot { background: #00ff88; } .chip.Y .dot { background: #ffb700; } .chip.C .dot { background: #ff8a3d; }
+        .chip i { display: none; font-size: 0.8rem; }
+        .chip[aria-pressed="true"] { color: var(--primary-neon); background: rgba(0, 229, 255, 0.15); border-color: var(--primary-neon); }
+        .chip[aria-pressed="true"] i { display: inline; }
+        .legend-mini { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 18px; font-size: 0.8rem; color: var(--text-muted); }
+        .legend-mini .dot { display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; }
+
+        .rec-list { display: flex; flex-direction: column; gap: 12px; }
+        .rec { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 14px; background-color: var(--card-bg); border: 1px solid var(--card-border); }
+        .rec-rank { flex-shrink: 0; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--primary-neon); background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.25); }
+        .rec-main { flex: 1; min-width: 0; }
+        .rec-name { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: #ffffff; }
+        .rec-sub { margin-top: 2px; font-size: 0.82rem; color: var(--text-muted); }
+        .empty { padding: 20px; text-align: center; color: var(--text-muted); border: 1px dashed rgba(138, 153, 173, 0.4); border-radius: 12px; }
+        .others-title { margin: 22px 0 10px; font-family: 'Orbitron', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+        .mini { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 50px; font-size: 0.82rem; color: var(--text-muted); background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); }
+        .mini .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .mini.M .dot { background: #00ff88; } .mini.Y .dot { background: #ffb700; } .mini.C .dot { background: #ff8a3d; }
+
+        footer { text-align: center; margin-top: 60px; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        .rules a { color: var(--primary-neon); }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 10px; }
+            .back-btn { padding: 10px 14px; font-size: 0.85rem; }
+            .hero { padding: 35px 15px; margin-bottom: 25px; }
+            .hero h1 { font-size: 1.9rem; letter-spacing: 1px; }
+            .hero p { font-size: 1rem; }
+            .section-header h2 { font-size: 1.2rem; }
+            .table-card { padding: 18px; }
+            .select-field { max-width: none; }
+            .rec { padding: 12px 14px; gap: 10px; }
+            .rec-rank { width: 36px; height: 36px; font-size: 1rem; }
+            .rec-name { font-size: 0.92rem; }
+            .rate { min-width: 46px; padding: 3px 6px; font-size: 0.62rem; }
+            footer { margin-top: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="top-nav">
+            <a href="../tools.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Tools</a>
+            <a href="../index.html" class="home-btn" title="Back to Home"><i class="fa-solid fa-house"></i></a>
+        </nav>
+
+        <header class="hero">
+            <span class="badge"><i class="fa-solid fa-wand-magic-sparkles"></i> Tool 4.5</span>
+            <h1>Skill Recommender</h1>
+            <p>Choose a player's position and the skills they already have to get the 5 best skills to add, based on the Skill Suggestions ratings.</p>
+        </header>
+
+        <div class="section-header">
+            <i class="fa-solid fa-user"></i>
+            <h2>Player Position</h2>
+        </div>
+
+        <div class="table-card">
+            <div class="field select-field">
+                <label for="position">Position</label>
+                <select id="position"><option value="" selected disabled>Select a position</option><option value="CF">CF – Centre Forward</option><option value="SS">SS – Second Striker</option><option value="L/RWF">L/RWF – Left/Right Wing Forward</option><option value="AMF">AMF – Attacking Midfielder</option><option value="CMF">CMF – Centre Midfielder</option><option value="L/RMF">L/RMF – Left/Right Midfielder</option><option value="DMF">DMF – Defensive Midfielder</option><option value="L/RB">L/RB – Left/Right Back</option><option value="CB">CB – Centre-Back</option><option value="GK">GK – Goalkeeper</option></select>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <i class="fa-solid fa-hand-pointer"></i>
+            <h2>Skills Already Owned</h2>
+        </div>
+
+        <div class="table-card">
+            <p class="hint-text" id="ownedHint">Select a position first. Then tap the skills your player already has.</p>
+            <div id="ownedWrap" hidden>
+                <div class="chips-bar"><span><b id="ownedCount">0</b> selected</span><button type="button" class="link-btn" id="clearBtn">Clear all</button></div>
+                <div id="chips"></div>
+                <div class="legend-mini">
+                    <span><i class="dot" style="background:#00ff88"></i>MUST</span>
+                    <span><i class="dot" style="background:#ffb700"></i>YES</span>
+                    <span><i class="dot" style="background:#ff8a3d"></i>CAN</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <i class="fa-solid fa-trophy"></i>
+            <h2>Top 5 Recommended Skills</h2>
+        </div>
+
+        <div class="table-card">
+            <div id="recs"></div>
+            <div id="others"></div>
+        </div>
+
+        <div class="section-header">
+            <i class="fa-solid fa-circle-info"></i>
+            <h2>How It Works</h2>
+        </div>
+
+        <div class="table-card">
+            <ul class="rules">
+                <li><strong>Source:</strong> the ratings in the <a href="../game-mechanics/skill-suggestions.html">Skill Suggestions</a> page. Skills with no rating for the chosen position are not considered.</li>
+                <li><strong>Ranking:</strong> MUST first, then YES, then CAN. Skills your player already has are left out.</li>
+                <li><strong>Ties:</strong> skills with the same rating are ordered by how important their skill class is for that position (the sum of its ratings), then by their order in the guide.</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>eFootball Wiki · Skill Recommender Tool</p>
+        </footer>
+    </div>
+
+<script>
+(function () {
+    var POS = ['CF','SS','L/RWF','AMF','CMF','L/RMF','DMF','L/RB','CB','GK'];
+    var PTS = { M: 3, Y: 2, C: 1 }, LABEL = { M: 'MUST', Y: 'YES', C: 'CAN' }, DESC = { M: 'Highly recommended', Y: 'Very helpful', C: 'Situational' };
+    var CATS = [{"id": "dribbling", "label": "Dribbling", "cols": ["CF", "SS", "L/RWF", "AMF", "CMF", "L/RMF", "DMF", "L/RB", "CB", "GK"], "rows": [["Double Touch", "MMMMYYCC.."], ["Scissors Feint", ".........."], ["Flip Flap", ".........."], ["Marseille Turn", "YYMMCY...."], ["Chop Turn", ".........."], ["Cut Behind & Turn", "YYCC......"], ["Sole Control", "CCCC......"]]}, {"id": "shooting", "label": "Shooting", "cols": ["CF", "SS", "L/RWF", "AMF", "CMF", "L/RMF", "DMF", "L/RB", "CB", "GK"], "rows": [["Heading", "Y.....YCM."], ["Long-Range Curler", "MMMMCY...."], ["Chip Shot Control", "YCC......."], ["Knuckle Shot", "CCCC......"], ["Dipping Shot", "MYYC......"], ["Long-Range Shooting", "MMMMYY...."], ["Acrobatic Finishing", "YYCC......"], ["Heel Trick", "CC.YYC...."], ["First-time Shot", "MMYY......"]]}, {"id": "passing", "label": "Passing", "cols": ["CF", "SS", "L/RWF", "AMF", "CMF", "L/RMF", "DMF", "L/RB", "CB", "GK"], "rows": [["One-touch Pass", "MMMMMMMYYC"], ["Through Passing", "MMMMMMMYYC"], ["Weighted Pass", "...CY.YYYC"], ["Pinpoint Crossing", "..MYYM.MC."], ["Outside Curler", "MY.YYYCCCC"], ["Low Lofted Pass", "...CY.YCYC"]]}, {"id": "defending", "label": "Defending", "cols": ["CF", "SS", "L/RWF", "AMF", "CMF", "L/RMF", "DMF", "L/RB", "CB", "GK"], "rows": [["Man Marking", "....YCMMM."], ["Track Back", "...CC.NNN."], ["Interception", "....YCMMM."], ["Blocker", "....YCMMM."], ["Aerial Superiority", "Y.....MYM."], ["Sliding Tackle", "....YCYMM."], ["Acrobatic Clearance", "......YMM."]]}, {"id": "goalkeeping", "label": "Goalkeeping", "cols": ["GK"], "rows": [["GK Low Punt", "M"], ["GK High Punt", "M"], ["GK Long Throw", "M"], ["GK Penalty Saver", "M"]]}, {"id": "mentality", "label": "Mentality", "cols": ["CF", "SS", "L/RWF", "AMF", "CMF", "L/RMF", "DMF", "L/RB", "CB", "GK"], "rows": [["Super-sub", ".........."], ["Fighting Spirit", "MMMMMMMMMC"], ["Gamesmanship", "CCCC......"]]}];
+    function code(cat, row, pos) {
+        var i;
+        if (cat.cols.length === POS.length) i = POS.indexOf(pos);
+        else if (cat.id === 'goalkeeping' && pos === 'GK') i = 0;
+        else return '.';
+        return row[1].charAt(i);
+    }
+    // Every skill rated MUST / YES / CAN for the position
+    function pool(pos) {
+        var out = [], idx = 0, score = {};
+        CATS.forEach(function (cat) {
+            cat.rows.forEach(function (row) {
+                var c = code(cat, row, pos); idx++;
+                if (PTS[c]) { out.push({ name: row[0], cat: cat.label, catId: cat.id, code: c, idx: idx }); score[cat.id] = (score[cat.id] || 0) + PTS[c]; }
+            });
+        });
+        out.forEach(function (s) { s.catScore = score[s.catId]; });
+        return out;
+    }
+    function rank(pos, owned) {
+        return pool(pos).filter(function (s) { return !owned[s.name]; })
+            .sort(function (a, b) { return PTS[b.code] - PTS[a.code] || b.catScore - a.catScore || a.idx - b.idx; });
+    }
+    var $ = function (id) { return document.getElementById(id); };
+    var esc = function (s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
+    var pos = '', owned = {};
+
+    function renderChips() {
+        var items = pool(pos), html = '', cur = '';
+        items.forEach(function (s) {
+            if (s.cat !== cur) { if (cur) html += '</div>'; html += '<div class="group-title">' + esc(s.cat) + '</div><div class="chips">'; cur = s.cat; }
+            html += '<button type="button" class="chip ' + s.code + '" data-name="' + esc(s.name) + '" aria-pressed="' + (owned[s.name] ? 'true' : 'false') + '"><span class="dot"></span>' + esc(s.name) + '<i class="fa-solid fa-check"></i></button>';
+        });
+        $('chips').innerHTML = html + (cur ? '</div>' : '');
+    }
+
+    function renderRecs() {
+        var ranked = rank(pos, owned), top = ranked.slice(0, 5), rest = ranked.slice(5);
+        var ownedHere = pool(pos).filter(function (s) { return owned[s.name]; }).length;
+        $('ownedCount').textContent = ownedHere;
+        if (!pos) { $('recs').innerHTML = '<div class="empty">Select a position to see your recommendations.</div>'; $('others').innerHTML = ''; return; }
+        if (!top.length) { $('recs').innerHTML = '<div class="empty">Your player already has every rated skill for this position.</div>'; $('others').innerHTML = ''; return; }
+        $('recs').innerHTML = '<div class="rec-list">' + top.map(function (s, i) {
+            return '<div class="rec"><div class="rec-rank">' + (i + 1) + '</div><div class="rec-main"><div class="rec-name">' + esc(s.name) + '</div><div class="rec-sub">' + esc(s.cat) + ' · ' + DESC[s.code] + '</div></div><span class="rate ' + s.code + '">' + LABEL[s.code] + '</span></div>';
+        }).join('') + '</div>';
+        $('others').innerHTML = rest.length ? '<div class="others-title">Other options</div><div class="chips">' + rest.map(function (s) {
+            return '<span class="mini ' + s.code + '"><span class="dot"></span>' + esc(s.name) + '</span>';
+        }).join('') + '</div>' : '';
+    }
+
+    $('position').addEventListener('change', function () {
+        pos = this.value;
+        $('ownedHint').textContent = 'Tap the skills your player already has. They will be left out of the recommendations.';
+        $('ownedWrap').hidden = false;
+        renderChips(); renderRecs();
+    });
+    $('chips').addEventListener('click', function (e) {
+        var b = e.target.closest('.chip');
+        if (!b) return;
+        var n = b.getAttribute('data-name');
+        if (owned[n]) delete owned[n]; else owned[n] = true;
+        b.setAttribute('aria-pressed', owned[n] ? 'true' : 'false');
+        renderRecs();
+    });
+    $('clearBtn').addEventListener('click', function () { owned = {}; renderChips(); renderRecs(); });
+    renderRecs();
+})();
+</script>
+</body>
+</html>
